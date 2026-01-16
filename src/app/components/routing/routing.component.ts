@@ -1,23 +1,31 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 import { FlatpickrModule } from 'angularx-flatpickr';
 
 @Component({
   selector: 'app-routing',
   standalone: true,
-  imports: [CommonModule, FormsModule, FlatpickrModule],
+  imports: [CommonModule, ReactiveFormsModule, FlatpickrModule],
   templateUrl: './routing.component.html',
   styleUrls: ['./routing.component.css'],
 })
 export class RoutingComponent {
-  // Form Values based on IMG_8158.JPG
-  action: string = 'Switch';
-  environment: string = '';
-  switchingTarget: string = '';
-  domain: string = '';
-  peerDomain: string = '';
-  routingTime: Date | undefined;
+  // --- FORM DEFINITION ---
+  routingForm = new FormGroup({
+    action: new FormControl('Switch'),
+    environment: new FormControl('', Validators.required),
+    switchingTarget: new FormControl('', Validators.required),
+    domain: new FormControl('', Validators.required),
+    peerDomain: new FormControl('', Validators.required),
+    routingTime: new FormControl<Date | null>(null),
+  });
+
   showConfirmation = false;
 
   // UI States
@@ -28,17 +36,14 @@ export class RoutingComponent {
   toastTimeout: any;
 
   setToNow() {
-    this.routingTime = new Date();
+    this.routingForm.patchValue({
+      routingTime: new Date(),
+    });
   }
 
   onSubmit() {
     this.isSubmitted = true;
-    if (
-      this.environment &&
-      this.switchingTarget &&
-      this.domain &&
-      this.peerDomain
-    ) {
+    if (this.routingForm.valid) {
       this.showConfirmation = true;
     } else {
       this.showToast('Please fill in all required fields.', 'error', true);
@@ -55,19 +60,17 @@ export class RoutingComponent {
   }
 
   performRoutingAction() {
-    // Simulate API call result
     const isSuccess = Math.random() > 0.5;
 
     if (isSuccess) {
-      // Success Result (Persistent)
+      const actionVal = this.routingForm.get('action')?.value || '';
       this.showToast(
-        `Action '${this.action.toLowerCase()}' completed successfully.`,
+        `Action '${actionVal.toLowerCase()}' completed successfully.`,
         'success',
         false
       );
       this.resetForm();
     } else {
-      // Technical Error (Persistent)
       this.showToast(
         'A technical error occurred while performing the action, please try again later. If the issue persists, please contact Consultancy team.',
         'error',
@@ -78,11 +81,14 @@ export class RoutingComponent {
 
   resetForm() {
     this.isSubmitted = false;
-    this.environment = '';
-    this.switchingTarget = '';
-    this.domain = '';
-    this.peerDomain = '';
-    this.routingTime = undefined;
+    this.routingForm.reset({
+      action: 'Switch',
+      environment: '',
+      switchingTarget: '',
+      domain: '',
+      peerDomain: '',
+      routingTime: null,
+    });
   }
 
   showToast(message: string, type: 'success' | 'error', autoClose: boolean) {

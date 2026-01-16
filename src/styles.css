@@ -485,6 +485,36 @@ select:focus {
     vertical-align: middle;
 }
 
+/* --- SHARED BADGE STYLES --- */
+
+/* Container for inputs that have badges below them */
+.has-badge {
+    display: flex;
+    flex-direction: column;
+}
+
+.domain-badge {
+    align-self: flex-end;
+    /* Pushes the badge to the right */
+    margin-top: 6px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+    /* Use the global fadeInUp animation defined in your consolidated styles */
+    animation: fadeInUp 0.4s ease-out forwards;
+}
+
+/* Color schemes for badges (External/Internal) */
+.external,
+.internal {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border: 1px solid #badbcc;
+}
+
+
 /* Status Badges */
 .status-badge {
     padding: 4px 12px;

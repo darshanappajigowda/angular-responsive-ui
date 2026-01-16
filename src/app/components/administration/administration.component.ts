@@ -1,52 +1,70 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { FlatpickrModule } from 'angularx-flatpickr';
+import {
+  ReactiveFormsModule,
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
+import { FlatpickrDirective } from 'angularx-flatpickr';
 
 @Component({
   selector: 'app-administration',
   standalone: true,
-  imports: [CommonModule, FormsModule, FlatpickrModule],
+  imports: [CommonModule, ReactiveFormsModule, FlatpickrDirective],
   templateUrl: './administration.component.html',
   styleUrls: ['./administration.component.css'],
 })
 export class AdministrationComponent {
-  // ... existing form values ...
-  action: string = 'Stop';
-  environment: string = '';
-  domain: string = '';
-  adminTarget: string = '';
-  adminTime: Date | undefined;
+  // --- FORM DEFINITION ---
+  adminForm = new FormGroup({
+    action: new FormControl('Stop'),
+    environment: new FormControl('', Validators.required),
+    domain: new FormControl('', Validators.required),
+    adminTarget: new FormControl('', Validators.required),
+    adminTime: new FormControl<Date | null>(null),
+  });
 
+  // UI States
   isSubmitted: boolean = false;
+  showConfirmation: boolean = false;
 
   // Toast State
   toastVisible: boolean = false;
   toastMessage: string = '';
   toastType: 'success' | 'error' = 'success';
-  toastTimeout: any; // Added for auto-close timer
+  toastTimeout: any;
 
-  showConfirmation = false;
-
+  // Helper to set time programmatically
   setToNow() {
-    this.adminTime = new Date();
+    this.adminForm.patchValue({
+      adminTime: new Date(),
+    });
   }
 
   onSubmit() {
     this.isSubmitted = true;
-    if (this.environment && this.domain && this.adminTarget) {
-      this.showConfirmation = true; // Open modal instead of performing action
+
+    if (this.adminForm.valid) {
+      this.showConfirmation = true; // Open modal
     } else {
       this.showToast('Please fill in all required fields.', 'error', true);
     }
   }
 
+  confirmAction() {
+    this.showConfirmation = false;
+    this.performAction();
+  }
+
   performAction() {
+    // Simulate API Call
     const isSuccess = Math.random() > 0.5;
 
     if (isSuccess) {
-      const actionLower = this.action.toLowerCase();
-      // SUCCESS: Persists until closed (autoClose = false)
+      const actionVal = this.adminForm.get('action')?.value || '';
+      const actionLower = actionVal.toLowerCase();
+
       this.showToast(
         `Action '${actionLower}' completed successfully.`,
         'success',
@@ -54,7 +72,6 @@ export class AdministrationComponent {
       );
       this.resetForm();
     } else {
-      // TECHNICAL ERROR: Persists until closed (autoClose = false)
       this.showToast(
         'A technical error occurred while performing the action, please try again later. If the issue persists, please contact Consultancy team.',
         'error',
@@ -63,21 +80,27 @@ export class AdministrationComponent {
     }
   }
 
-  resetForm() {
-    this.isSubmitted = false;
-    this.environment = '';
-    this.domain = '';
-    this.adminTarget = '';
-    this.adminTime = undefined;
+  cancelAction() {
+    this.showConfirmation = false;
   }
 
-  // UPDATED TOAST LOGIC
+  resetForm() {
+    this.isSubmitted = false;
+    this.adminForm.reset({
+      action: 'Stop',
+      environment: '',
+      domain: '',
+      adminTarget: '',
+      adminTime: null,
+    });
+  }
+
+  // --- TOAST LOGIC ---
   showToast(
     message: string,
     type: 'success' | 'error',
     autoClose: boolean = false
   ) {
-    // 1. Clear any existing timer
     if (this.toastTimeout) {
       clearTimeout(this.toastTimeout);
       this.toastTimeout = null;
@@ -88,7 +111,6 @@ export class AdministrationComponent {
       this.toastType = type;
       this.toastVisible = true;
 
-      // 2. Only set timer if autoClose is TRUE
       if (autoClose) {
         this.toastTimeout = setTimeout(() => {
           this.closeToast();
@@ -110,14 +132,5 @@ export class AdministrationComponent {
       clearTimeout(this.toastTimeout);
       this.toastTimeout = null;
     }
-  }
-
-  confirmAction() {
-    this.showConfirmation = false;
-    this.performAction(); // Your existing logic to call the API
-  }
-
-  cancelAction() {
-    this.showConfirmation = false;
   }
 }

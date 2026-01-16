@@ -1,27 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 import { FlatpickrDirective } from 'angularx-flatpickr';
 
 @Component({
   selector: 'app-deployment-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, FlatpickrDirective],
+  imports: [CommonModule, ReactiveFormsModule, FlatpickrDirective],
   templateUrl: './deployment-form.component.html',
   styleUrls: ['./deployment-form.component.css'],
 })
 export class DeploymentFormComponent implements OnInit {
-  // Form Values
-  action: string = 'install';
-  deploymentSource: string = '';
-  build: string = '';
-  environment: string = '';
-  domainValue: string = '';
-  deploymentTarget: string = '';
-  fortifyStatus: string = 'Valid';
-  deploymentTime: Date | undefined;
+  // --- FORM DEFINITION ---
+  // We explicitly define every control to match your HTML fields
+  deploymentForm = new FormGroup({
+    action: new FormControl('install'),
+    deploymentSource: new FormControl('', Validators.required),
+    build: new FormControl('', Validators.required),
+    environment: new FormControl('', Validators.required),
+    domainValue: new FormControl('', Validators.required), // Matches 'domainValue' in your HTML
+    deploymentTarget: new FormControl('', Validators.required),
+    deploymentTime: new FormControl<Date | null>(null),
+  });
 
-  // States
+  // Display-only variables (Not part of the form validation)
+  fortifyStatus: string = 'Valid';
+
+  // UI States
   isSubmitted: boolean = false;
   showConfirmation: boolean = false;
 
@@ -32,52 +42,51 @@ export class DeploymentFormComponent implements OnInit {
   toastTimeout: any;
 
   ngOnInit() {
+    // Simulate loading external status
     setTimeout(() => {
       this.fortifyStatus = 'Valid';
     }, 1000);
   }
 
+  // Helper to set time programmatically
   setToNow() {
-    this.deploymentTime = new Date();
+    this.deploymentForm.patchValue({
+      deploymentTime: new Date(),
+    });
+  }
+
+  // Helper getter to keep HTML cleaner (optional, but good practice)
+  get f() {
+    return this.deploymentForm.controls;
   }
 
   deploy() {
     this.isSubmitted = true;
-    if (this.isValid()) {
+
+    if (this.deploymentForm.valid) {
       this.showConfirmation = true;
     } else {
-      // VALIDATION ERROR: Auto-closes after 3 seconds (pass 'true')
       this.showToast('Please fill in all required fields.', 'error', true);
     }
-  }
-
-  isValid(): boolean {
-    return !!(
-      this.deploymentSource &&
-      this.build &&
-      this.environment &&
-      this.domainValue &&
-      this.deploymentTarget
-    );
   }
 
   confirmDeployment() {
     this.showConfirmation = false;
 
-    // --- SIMULATING API CALL (Random Success or Failure) ---
-    // In real app, put this inside your API .subscribe(error => ...)
-    const isSuccess = false;
+    // --- SIMULATING API CALL ---
+    const isSuccess = false; // Toggle this to test success/fail
 
     if (isSuccess) {
-      // SUCCESS: Persists until closed
+      const build = this.deploymentForm.get('build')?.value;
+      const env = this.deploymentForm.get('environment')?.value;
+
       this.showToast(
-        `Deployment initiated: ${this.build} to ${this.environment}`,
+        `Deployment initiated: ${build} to ${env}`,
         'success',
         false
       );
       this.resetForm();
     } else {
-      // TECHNICAL ERROR: Persists until closed
       this.showToast(
         'A technical error occurred while performing the action, please try again later. If the issue persists, please contact Consultancy team.',
         'error',
@@ -92,23 +101,23 @@ export class DeploymentFormComponent implements OnInit {
 
   resetForm() {
     this.isSubmitted = false;
-    this.deploymentSource = '';
-    this.build = '';
-    this.environment = '';
-    this.domainValue = '';
-    this.deploymentTarget = '';
-    this.deploymentTime = undefined;
-    this.action = 'install';
+    this.deploymentForm.reset({
+      action: 'install',
+      deploymentSource: '',
+      build: '',
+      environment: '',
+      domainValue: '',
+      deploymentTarget: '',
+      deploymentTime: null,
+    });
   }
 
-  // --- UPDATED TOAST LOGIC ---
-  // Added 'autoClose' parameter (defaults to false)
+  // --- TOAST LOGIC ---
   showToast(
     message: string,
     type: 'success' | 'error',
     autoClose: boolean = false
   ) {
-    // 1. Clear any existing timer
     if (this.toastTimeout) {
       clearTimeout(this.toastTimeout);
       this.toastTimeout = null;
@@ -119,7 +128,6 @@ export class DeploymentFormComponent implements OnInit {
       this.toastType = type;
       this.toastVisible = true;
 
-      // 2. Only set timer if autoClose is TRUE
       if (autoClose) {
         this.toastTimeout = setTimeout(() => {
           this.closeToast();
@@ -127,7 +135,6 @@ export class DeploymentFormComponent implements OnInit {
       }
     };
 
-    // Animation handling
     if (this.toastVisible) {
       this.toastVisible = false;
       setTimeout(() => display(), 350);

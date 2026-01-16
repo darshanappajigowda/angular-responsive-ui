@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 interface AuthRequest {
   id: string;
@@ -16,20 +18,25 @@ interface AuthRequest {
 @Component({
   selector: 'app-authorization',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './authorization.component.html',
   styleUrls: ['./authorization.component.css'],
 })
-export class AuthorizationComponent {
-  // Form Filters
-  // selectedStatus removed since we only show Pending
-  selectedEnv: string = '';
+export class AuthorizationComponent implements OnInit, OnDestroy {
+  // --- FORM DEFINITION ---
+  // Main form for the "Environment" selection
+  authForm = new FormGroup({
+    environment: new FormControl(''),
+  });
+
+  // Separate control for the Table Search (since it sits outside the main form)
+  searchControl = new FormControl('');
+  private searchSubscription: Subscription | undefined;
 
   // State
   isSubmitted: boolean = false;
   showTable: boolean = false;
   expandedRequestId: string | null = null;
-  searchText: string = '';
 
   // Data Containers
   authRequests: AuthRequest[] = [];
@@ -44,12 +51,30 @@ export class AuthorizationComponent {
   toastVisible: boolean = false;
   toastMessage: string = '';
   toastType: 'success' | 'error' = 'success';
+  toastTimeout: any;
+
+  ngOnInit() {
+    // Reactively filter data when search text changes
+    this.searchSubscription = this.searchControl.valueChanges
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe(() => {
+        this.filterData();
+      });
+  }
+
+  ngOnDestroy() {
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
+    }
+  }
 
   onSubmit() {
     this.isSubmitted = true;
     this.showTable = true;
     this.currentPage = 1;
-    this.searchText = '';
+
+    // Clear search when submitting new filter
+    this.searchControl.setValue('', { emitEvent: false });
 
     // Simulate Fetching Data (Only Pending items)
     this.authRequests = [
@@ -161,16 +186,20 @@ export class AuthorizationComponent {
   filterData() {
     let tempRequests = this.authRequests;
 
-    // Filter by Environment (if selected)
-    if (this.selectedEnv) {
+    // 1. Get Environment from FormGroup
+    const selectedEnv = this.authForm.get('environment')?.value || '';
+
+    if (selectedEnv) {
       tempRequests = tempRequests.filter(
-        (req) => req.environment === this.selectedEnv
+        (req) => req.environment === selectedEnv
       );
     }
 
-    // Filter by Search Text
-    if (this.searchText) {
-      const lowerSearch = this.searchText.toLowerCase();
+    // 2. Get Search Text from FormControl
+    const searchText = this.searchControl.value || '';
+
+    if (searchText) {
+      const lowerSearch = searchText.toLowerCase();
       tempRequests = tempRequests.filter(
         (req) =>
           req.id.toLowerCase().includes(lowerSearch) ||
@@ -247,26 +276,42 @@ export class AuthorizationComponent {
     }, 300);
   }
 
-  showToast(message: string, type: 'success' | 'error') {
-    if (this.toastVisible) {
-      // 1. If visible, hide it first (triggers CSS exit animation)
-      this.toastVisible = false;
+  // --- TOAST LOGIC ---
+  showToast(
+    message: string,
+    type: 'success' | 'error',
+    autoClose: boolean = false
+  ) {
+    if (this.toastTimeout) {
+      clearTimeout(this.toastTimeout);
+      this.toastTimeout = null;
+    }
 
-      // 2. Wait for the exit animation (300ms) to finish
-      setTimeout(() => {
-        this.toastMessage = message;
-        this.toastType = type;
-        this.toastVisible = true; // Slide back in
-      }, 350); // 350ms ensures the CSS transition (0.3s) is fully complete
-    } else {
-      // 3. If not visible, show immediately
+    const display = () => {
       this.toastMessage = message;
       this.toastType = type;
       this.toastVisible = true;
+
+      if (autoClose) {
+        this.toastTimeout = setTimeout(() => {
+          this.closeToast();
+        }, 3000);
+      }
+    };
+
+    if (this.toastVisible) {
+      this.toastVisible = false;
+      setTimeout(() => display(), 350);
+    } else {
+      display();
     }
   }
 
   closeToast() {
     this.toastVisible = false;
+    if (this.toastTimeout) {
+      clearTimeout(this.toastTimeout);
+      this.toastTimeout = null;
+    }
   }
 }

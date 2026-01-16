@@ -1,15 +1,17 @@
 <div class="form-container">
     <h2>Application Info</h2>
-    <form class="info-form form-grid">
+
+    <form [formGroup]="infoForm" class="info-form form-grid">
         <div class="form-group full-width">
             <label class="col-label">Action</label>
             <div class="radio-group">
-                <button type="button" class="pill-btn" [class.active]="selectedAction === 'envInfo'"
-                    (click)="selectedAction = 'envInfo'">
+                <button type="button" class="pill-btn" [class.active]="infoForm.get('action')?.value === 'envInfo'"
+                    (click)="infoForm.patchValue({action: 'envInfo'})">
                     Environment Info
                 </button>
-                <button type="button" class="pill-btn" [class.active]="selectedAction === 'requestHistory'"
-                    (click)="selectedAction = 'requestHistory'">
+                <button type="button" class="pill-btn"
+                    [class.active]="infoForm.get('action')?.value === 'requestHistory'"
+                    (click)="infoForm.patchValue({action: 'requestHistory'})">
                     Request History
                 </button>
             </div>
@@ -18,13 +20,14 @@
         <div class="form-group">
             <label class="col-label">Environment <span class="required">*</span></label>
             <div class="col-input">
-                <select [(ngModel)]="selectedEnv" name="environment" [class.input-error]="isSubmitted && !selectedEnv">
+                <select formControlName="environment"
+                    [class.input-error]="isSubmitted && infoForm.get('environment')?.invalid">
                     <option value="">Select environment</option>
                     <option value="SYST">SYST</option>
                     <option value="UAT">UAT</option>
                     <option value="PROD">PROD</option>
                 </select>
-                @if (isSubmitted && !selectedEnv) {
+                @if (isSubmitted && infoForm.get('environment')?.invalid) {
                 <div class="error-msg">Environment is required</div>
                 }
             </div>
@@ -33,12 +36,13 @@
         <div class="form-group">
             <label class="col-label">Application <span class="required">*</span></label>
             <div class="col-input">
-                <select [(ngModel)]="selectedApp" name="application" [class.input-error]="isSubmitted && !selectedApp">
+                <select formControlName="application"
+                    [class.input-error]="isSubmitted && infoForm.get('application')?.invalid">
                     <option value="">Select application</option>
                     <option value="ivr.war">ivr.war</option>
                     <option value="claims.ear">claims.ear</option>
                 </select>
-                @if (isSubmitted && !selectedApp) {
+                @if (isSubmitted && infoForm.get('application')?.invalid) {
                 <div class="error-msg">Application is required</div>
                 }
             </div>

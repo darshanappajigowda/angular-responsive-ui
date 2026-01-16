@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 import {
   SharedTableComponent,
   TableColumn,
@@ -9,18 +14,20 @@ import {
 @Component({
   selector: 'app-information',
   standalone: true,
-  imports: [CommonModule, FormsModule, SharedTableComponent],
+  imports: [CommonModule, ReactiveFormsModule, SharedTableComponent],
   templateUrl: './information.component.html',
   styleUrls: ['./information.component.css'],
 })
 export class InformationComponent {
-  selectedAction: string = 'requestHistory';
-  selectedEnv: string = '';
-  selectedApp: string = '';
+  // --- FORM DEFINITION ---
+  infoForm = new FormGroup({
+    action: new FormControl('requestHistory'),
+    environment: new FormControl('', Validators.required),
+    application: new FormControl('', Validators.required),
+  });
 
   isSubmitted: boolean = false;
   showTable: boolean = false;
-
   tableData: any[] = [];
 
   // --- TOAST STATE ---
@@ -47,12 +54,12 @@ export class InformationComponent {
 
   onSubmit() {
     this.isSubmitted = true;
-    if (this.selectedEnv && this.selectedApp) {
+
+    if (this.infoForm.valid) {
       this.showTable = true;
       this.loadMockData();
     } else {
       this.showTable = false;
-      // Trigger Validation Error Toast (autoClose: true)
       this.showToast('Please fill in all required fields.', 'error', true);
     }
   }
@@ -76,7 +83,7 @@ export class InformationComponent {
       if (autoClose) {
         this.toastTimeout = setTimeout(() => {
           this.closeToast();
-        }, 3000); // 3 seconds delay
+        }, 3000);
       }
     };
 
@@ -114,6 +121,7 @@ export class InformationComponent {
         errorCode: '-',
         logId: 'LOG-101',
       },
+      // ... (Rest of your mock data remains the same) ...
       {
         requestId: '40065',
         timestamp: '2025-06-03 19:19:20',

@@ -2,30 +2,34 @@
 
     <h2>Application Administration</h2>
 
-    <form class="form-grid">
+    <form [formGroup]="adminForm" class="form-grid">
 
         <div class="form-group full-width">
             <label class="col-label">Action</label>
             <div class="radio-group">
-                <button type="button" class="pill-btn" [class.active]="action === 'Stop'" (click)="action = 'Stop'">
+                <button type="button" class="pill-btn" [class.active]="adminForm.get('action')?.value === 'Stop'"
+                    (click)="adminForm.patchValue({action: 'Stop'})">
                     Stop
                 </button>
-                <button type="button" class="pill-btn" [class.active]="action === 'Stop Immediately'"
-                    (click)="action = 'Stop Immediately'">
+                <button type="button" class="pill-btn"
+                    [class.active]="adminForm.get('action')?.value === 'Stop Immediately'"
+                    (click)="adminForm.patchValue({action: 'Stop Immediately'})">
                     Stop Immediately
                 </button>
-                <button type="button" class="pill-btn" [class.active]="action === 'Start'" (click)="action = 'Start'">
+                <button type="button" class="pill-btn" [class.active]="adminForm.get('action')?.value === 'Start'"
+                    (click)="adminForm.patchValue({action: 'Start'})">
                     Start
                 </button>
-                <button type="button" class="pill-btn" [class.active]="action === 'Restart'"
-                    (click)="action = 'Restart'">
+                <button type="button" class="pill-btn" [class.active]="adminForm.get('action')?.value === 'Restart'"
+                    (click)="adminForm.patchValue({action: 'Restart'})">
                     Restart
                 </button>
-                <button type="button" class="pill-btn" [class.active]="action === 'Uninstall'"
-                    (click)="action = 'Uninstall'">
+                <button type="button" class="pill-btn" [class.active]="adminForm.get('action')?.value === 'Uninstall'"
+                    (click)="adminForm.patchValue({action: 'Uninstall'})">
                     Uninstall
                 </button>
-                <button type="button" class="pill-btn" [class.active]="action === 'Remove'" (click)="action = 'Remove'">
+                <button type="button" class="pill-btn" [class.active]="adminForm.get('action')?.value === 'Remove'"
+                    (click)="adminForm.patchValue({action: 'Remove'})">
                     Remove
                 </button>
             </div>
@@ -34,13 +38,14 @@
         <div class="form-group">
             <label class="col-label">Environment <span class="required">*</span></label>
             <div class="col-input">
-                <select [(ngModel)]="environment" name="environment" [class.input-error]="isSubmitted && !environment">
+                <select formControlName="environment"
+                    [class.input-error]="isSubmitted && adminForm.get('environment')?.invalid">
                     <option value="">Select environment</option>
                     <option value="SYST">SYST</option>
                     <option value="UAT">UAT</option>
                     <option value="PROD">PROD</option>
                 </select>
-                @if (isSubmitted && !environment) {
+                @if (isSubmitted && adminForm.get('environment')?.invalid) {
                 <div class="error-msg">Environment is required</div>
                 }
             </div>
@@ -49,12 +54,12 @@
         <div class="form-group">
             <label class="col-label">Domain <span class="required">*</span></label>
             <div class="col-input">
-                <select [(ngModel)]="domain" name="domain" [class.input-error]="isSubmitted && !domain">
+                <select formControlName="domain" [class.input-error]="isSubmitted && adminForm.get('domain')?.invalid">
                     <option value="">Select domain</option>
                     <option value="S1FD11">S1FD11</option>
                     <option value="S1FD12">S1FD12</option>
                 </select>
-                @if (isSubmitted && !domain) {
+                @if (isSubmitted && adminForm.get('domain')?.invalid) {
                 <div class="error-msg">Domain is required</div>
                 }
             </div>
@@ -63,12 +68,13 @@
         <div class="form-group">
             <label class="col-label">Admin Target <span class="required">*</span></label>
             <div class="col-input">
-                <select [(ngModel)]="adminTarget" name="adminTarget" [class.input-error]="isSubmitted && !adminTarget">
+                <select formControlName="adminTarget"
+                    [class.input-error]="isSubmitted && adminForm.get('adminTarget')?.invalid">
                     <option value="">Select admin target</option>
                     <option value="Target1">Target1</option>
                     <option value="Target2">Target2</option>
                 </select>
-                @if (isSubmitted && !adminTarget) {
+                @if (isSubmitted && adminForm.get('adminTarget')?.invalid) {
                 <div class="error-msg">Admin Target is required</div>
                 }
             </div>
@@ -78,7 +84,7 @@
             <label class="col-label">Time (optional)</label>
             <div class="col-input">
                 <div class="flex-input">
-                    <input type="text" mwlFlatpickr name="adminTime" [(ngModel)]="adminTime" [enableTime]="true"
+                    <input type="text" mwlFlatpickr formControlName="adminTime" [enableTime]="true"
                         dateFormat="Y-m-d H:i" altFormat="d/m/Y H:i" [altInput]="true" placeholder="dd/mm/yyyy --:--"
                         class="date-picker-input">
                     <button type="button" class="icon-btn" (click)="setToNow()" title="Set to Current Time">
@@ -111,20 +117,21 @@
                 <h3>Confirm Administration Action</h3>
             </div>
             <div class="modal-body">
-                <p class="modal-intro">Are you sure you want to <strong>{{ action | lowercase }}</strong> this service?
+                <p class="modal-intro">Are you sure you want to <strong>{{ adminForm.get('action')?.value | lowercase
+                        }}</strong> this service?
                 </p>
                 <div class="summary-grid">
                     <div class="summary-item">
                         <span class="label">Action:</span>
-                        <span class="value">{{ action }}</span>
+                        <span class="value">{{ adminForm.get('action')?.value }}</span>
                     </div>
                     <div class="summary-item">
                         <span class="label">Environment:</span>
-                        <span class="value">{{ environment }}</span>
+                        <span class="value">{{ adminForm.get('environment')?.value }}</span>
                     </div>
                     <div class="summary-item">
                         <span class="label">Domain:</span>
-                        <span class="value">{{ domain }}</span>
+                        <span class="value">{{ adminForm.get('domain')?.value }}</span>
                     </div>
                 </div>
             </div>
@@ -135,7 +142,6 @@
         </div>
     </div>
     }
-
 
     <div class="toast-notification" [class.show]="toastVisible" [class.error]="toastType === 'error'">
         <div class="toast-icon">

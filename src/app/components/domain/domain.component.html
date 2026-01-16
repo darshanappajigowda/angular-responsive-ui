@@ -2,12 +2,13 @@
 
     <h2>Application Domains</h2>
 
-    <form class="form-grid">
+    <form [formGroup]="domainForm" class="form-grid">
         <div class="form-group full-width">
             <label class="col-label">Action</label>
             <div class="radio-group">
-                <button type="button" class="pill-btn" [class.active]="action === 'loadDomains'"
-                    (click)="action = 'loadDomains'">
+                <button type="button" class="pill-btn"
+                    [class.active]="domainForm.get('action')?.value === 'loadDomains'"
+                    (click)="domainForm.patchValue({action: 'loadDomains'})">
                     Load Domains
                 </button>
             </div>
@@ -16,7 +17,7 @@
         <div class="form-group">
             <label class="col-label">Environment</label>
             <div class="col-input">
-                <select [(ngModel)]="selectedEnv" name="environment">
+                <select formControlName="environment">
                     <option value="">Select environment</option>
                     <option value="SYST">SYST</option>
                     <option value="UAT">UAT</option>

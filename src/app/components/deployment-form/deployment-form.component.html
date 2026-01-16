@@ -2,36 +2,44 @@
 
     <h2>Application Deployment</h2>
 
-    <form class="form-grid">
+    <form [formGroup]="deploymentForm" class="form-grid">
 
         <div class="form-group full-width">
             <label class="col-label">Action</label>
             <div class="radio-group">
-                <button type="button" class="pill-btn" [class.active]="action === 'install'"
-                    (click)="action = 'install'">Install</button>
-                <button type="button" class="pill-btn" [class.active]="action === 'uninstall'"
-                    (click)="action = 'uninstall'">Uninstall</button>
-                <button type="button" class="pill-btn" [class.active]="action === 'start'"
-                    (click)="action = 'start'">Start</button>
-                <button type="button" class="pill-btn" [class.active]="action === 'restart'"
-                    (click)="action = 'restart'">Restart</button>
-                <button type="button" class="pill-btn" [class.active]="action === 'stop'"
-                    (click)="action = 'stop'">Stop</button>
-                <button type="button" class="pill-btn" [class.active]="action === 'delete'"
-                    (click)="action = 'delete'">Delete</button>
+                <button type="button" class="pill-btn"
+                    [class.active]="deploymentForm.get('action')?.value === 'install'"
+                    (click)="deploymentForm.patchValue({action: 'install'})">Install</button>
+
+                <button type="button" class="pill-btn"
+                    [class.active]="deploymentForm.get('action')?.value === 'uninstall'"
+                    (click)="deploymentForm.patchValue({action: 'uninstall'})">Uninstall</button>
+
+                <button type="button" class="pill-btn" [class.active]="deploymentForm.get('action')?.value === 'start'"
+                    (click)="deploymentForm.patchValue({action: 'start'})">Start</button>
+
+                <button type="button" class="pill-btn"
+                    [class.active]="deploymentForm.get('action')?.value === 'restart'"
+                    (click)="deploymentForm.patchValue({action: 'restart'})">Restart</button>
+
+                <button type="button" class="pill-btn" [class.active]="deploymentForm.get('action')?.value === 'stop'"
+                    (click)="deploymentForm.patchValue({action: 'stop'})">Stop</button>
+
+                <button type="button" class="pill-btn" [class.active]="deploymentForm.get('action')?.value === 'delete'"
+                    (click)="deploymentForm.patchValue({action: 'delete'})">Delete</button>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-label">Deployment Source <span class="required">*</span></label>
             <div class="col-input">
-                <select [(ngModel)]="deploymentSource" name="deploymentSource"
-                    [class.input-error]="isSubmitted && !deploymentSource">
+                <select formControlName="deploymentSource"
+                    [class.input-error]="isSubmitted && deploymentForm.get('deploymentSource')?.invalid">
                     <option value="">Select deployment source</option>
                     <option value="GitLab">GitLab</option>
                     <option value="Jenkins">Jenkins</option>
                 </select>
-                @if (isSubmitted && !deploymentSource) {
+                @if (isSubmitted && deploymentForm.get('deploymentSource')?.invalid) {
                 <div class="error-msg">Deployment Source is required</div>
                 }
             </div>
@@ -40,12 +48,13 @@
         <div class="form-group">
             <label class="col-label">Build <span class="required">*</span></label>
             <div class="col-input">
-                <select [(ngModel)]="build" name="build" [class.input-error]="isSubmitted && !build">
+                <select formControlName="build"
+                    [class.input-error]="isSubmitted && deploymentForm.get('build')?.invalid">
                     <option value="">Select build</option>
                     <option value="Build_1.0.1">Build_1.0.1</option>
                     <option value="Build_1.0.2">Build_1.0.2</option>
                 </select>
-                @if (isSubmitted && !build) {
+                @if (isSubmitted && deploymentForm.get('build')?.invalid) {
                 <div class="error-msg">Build is required</div>
                 }
             </div>
@@ -61,12 +70,13 @@
         <div class="form-group">
             <label class="col-label">Environment <span class="required">*</span></label>
             <div class="col-input">
-                <select [(ngModel)]="environment" name="environment" [class.input-error]="isSubmitted && !environment">
+                <select formControlName="environment"
+                    [class.input-error]="isSubmitted && deploymentForm.get('environment')?.invalid">
                     <option value="">Select environment</option>
                     <option value="SYST">SYST</option>
                     <option value="UAT">UAT</option>
                 </select>
-                @if (isSubmitted && !environment) {
+                @if (isSubmitted && deploymentForm.get('environment')?.invalid) {
                 <div class="error-msg">Environment is required</div>
                 }
             </div>
@@ -75,24 +85,33 @@
         <div class="form-group">
             <label class="col-label">Domain <span class="required">*</span></label>
             <div class="col-input has-badge">
-                <select [(ngModel)]="domainValue" name="domain" [class.input-error]="isSubmitted && !domainValue">
+                <select formControlName="domainValue"
+                    [class.input-error]="isSubmitted && deploymentForm.get('domainValue')?.invalid">
                     <option value="">Select domain</option>
                     <option value="S1FD11">S1FD11</option>
                     <option value="S1FD12">S1FD12</option>
                     <option value="SYST">SYST</option>
                 </select>
-                @if (domainValue === 'S1FD11') { <div class="domain-badge external">External JBoss7 Domain</div> }
-                @if (domainValue === 'S1FD12') { <div class="domain-badge internal">Internal JBoss7 Domain</div> }
-                @if (isSubmitted && !domainValue) { <div class="error-msg">Domain is required</div> }
+
+                @if (deploymentForm.get('domainValue')?.value === 'S1FD11') {
+                <div class="domain-badge external">External JBoss7 Domain</div>
+                }
+                @if (deploymentForm.get('domainValue')?.value === 'S1FD12') {
+                <div class="domain-badge internal">Internal JBoss7 Domain</div>
+                }
+
+                @if (isSubmitted && deploymentForm.get('domainValue')?.invalid) {
+                <div class="error-msg">Domain is required</div>
+                }
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-label">Deployment Target <span class="required">*</span></label>
             <div class="col-input">
-                <input type="text" [(ngModel)]="deploymentTarget" name="deploymentTarget" placeholder="Enter target..."
-                    [class.input-error]="isSubmitted && !deploymentTarget">
-                @if (isSubmitted && !deploymentTarget) {
+                <input type="text" formControlName="deploymentTarget" placeholder="Enter target..."
+                    [class.input-error]="isSubmitted && deploymentForm.get('deploymentTarget')?.invalid">
+                @if (isSubmitted && deploymentForm.get('deploymentTarget')?.invalid) {
                 <div class="error-msg">Deployment Target is required</div>
                 }
             </div>
@@ -120,9 +139,9 @@
             <label class="col-label">Time (optional)</label>
             <div class="col-input">
                 <div class="flex-input">
-                    <input type="text" mwlFlatpickr name="deploymentTime" [(ngModel)]="deploymentTime"
-                        [enableTime]="true" dateFormat="Y-m-d H:i" altFormat="d/m/Y H:i" [altInput]="true"
-                        placeholder="Select date..." class="date-picker-input">
+                    <input type="text" mwlFlatpickr formControlName="deploymentTime" [enableTime]="true"
+                        dateFormat="Y-m-d H:i" altFormat="d/m/Y H:i" [altInput]="true" placeholder="Select date..."
+                        class="date-picker-input">
                     <button type="button" class="icon-btn" (click)="setToNow()" title="Set to Current Time">
                         <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -161,27 +180,29 @@
                 <div class="summary-grid">
                     <div class="summary-item">
                         <span class="label">Action:</span>
-                        <span class="value" style="text-transform: capitalize;">{{ action }}</span>
+                        <span class="value" style="text-transform: capitalize;">
+                            {{ deploymentForm.get('action')?.value }}
+                        </span>
                     </div>
                     <div class="summary-item">
                         <span class="label">Source:</span>
-                        <span class="value">{{ deploymentSource }}</span>
+                        <span class="value">{{ deploymentForm.get('deploymentSource')?.value }}</span>
                     </div>
                     <div class="summary-item">
                         <span class="label">Build:</span>
-                        <span class="value">{{ build }}</span>
+                        <span class="value">{{ deploymentForm.get('build')?.value }}</span>
                     </div>
                     <div class="summary-item">
                         <span class="label">Environment:</span>
-                        <span class="value">{{ environment }}</span>
+                        <span class="value">{{ deploymentForm.get('environment')?.value }}</span>
                     </div>
                     <div class="summary-item">
                         <span class="label">Domain:</span>
-                        <span class="value">{{ domainValue }}</span>
+                        <span class="value">{{ deploymentForm.get('domainValue')?.value }}</span>
                     </div>
                     <div class="summary-item">
                         <span class="label">Target:</span>
-                        <span class="value">{{ deploymentTarget }}</span>
+                        <span class="value">{{ deploymentForm.get('deploymentTarget')?.value }}</span>
                     </div>
                 </div>
             </div>

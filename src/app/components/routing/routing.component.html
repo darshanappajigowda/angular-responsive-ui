@@ -1,64 +1,71 @@
 <div class="form-container">
     <h2>Application Routing</h2>
 
-    <form class="form-grid">
+    <form [formGroup]="routingForm" class="form-grid">
         <div class="form-group full-width">
             <label class="col-label">Action</label>
             <div class="radio-group">
-                <button type="button" class="pill-btn" [class.active]="action === 'Switch'"
-                    (click)="action = 'Switch'">Switch</button>
-                <button type="button" class="pill-btn" [class.active]="action === 'Connect'"
-                    (click)="action = 'Connect'">Connect</button>
+                <button type="button" class="pill-btn" [class.active]="routingForm.get('action')?.value === 'Switch'"
+                    (click)="routingForm.patchValue({action: 'Switch'})">Switch</button>
+                <button type="button" class="pill-btn" [class.active]="routingForm.get('action')?.value === 'Connect'"
+                    (click)="routingForm.patchValue({action: 'Connect'})">Connect</button>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-label">Environment <span class="required">*</span></label>
             <div class="col-input">
-                <select [(ngModel)]="environment" name="environment" [class.input-error]="isSubmitted && !environment">
+                <select formControlName="environment"
+                    [class.input-error]="isSubmitted && routingForm.get('environment')?.invalid">
                     <option value="">Select environment</option>
                     <option value="SYST">SYST</option>
                     <option value="UAT">UAT</option>
                     <option value="PROD">PROD</option>
                 </select>
-                @if (isSubmitted && !environment) { <div class="error-msg">Environment is required</div> }
+                @if (isSubmitted && routingForm.get('environment')?.invalid) { <div class="error-msg">Environment is
+                    required</div> }
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-label">Switching Target <span class="required">*</span></label>
             <div class="col-input">
-                <select [(ngModel)]="switchingTarget" name="switchingTarget"
-                    [class.input-error]="isSubmitted && !switchingTarget">
+                <select formControlName="switchingTarget"
+                    [class.input-error]="isSubmitted && routingForm.get('switchingTarget')?.invalid">
                     <option value="">Select switching target</option>
                     <option value="TargetA">Target A</option>
                     <option value="TargetB">Target B</option>
                 </select>
-                @if (isSubmitted && !switchingTarget) { <div class="error-msg">Switching Target is required</div> }
+                @if (isSubmitted && routingForm.get('switchingTarget')?.invalid) { <div class="error-msg">Switching
+                    Target is required</div> }
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-label">Domain <span class="required">*</span></label>
             <div class="col-input">
-                <select [(ngModel)]="domain" name="domain" [class.input-error]="isSubmitted && !domain">
+                <select formControlName="domain"
+                    [class.input-error]="isSubmitted && routingForm.get('domain')?.invalid">
                     <option value="">Select domain</option>
                     <option value="S1FD11">S1FD11</option>
                     <option value="S1FD12">S1FD12</option>
                 </select>
-                @if (isSubmitted && !domain) { <div class="error-msg">Domain is required</div> }
+                @if (isSubmitted && routingForm.get('domain')?.invalid) { <div class="error-msg">Domain is required
+                </div> }
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-label">Peer Domain <span class="required">*</span></label>
             <div class="col-input">
-                <select [(ngModel)]="peerDomain" name="peerDomain" [class.input-error]="isSubmitted && !peerDomain">
+                <select formControlName="peerDomain"
+                    [class.input-error]="isSubmitted && routingForm.get('peerDomain')?.invalid">
                     <option value="">Select peer domain</option>
                     <option value="S1FD21">S1FD21</option>
                     <option value="S1FD22">S1FD22</option>
                 </select>
-                @if (isSubmitted && !peerDomain) { <div class="error-msg">Peer Domain is required</div> }
+                @if (isSubmitted && routingForm.get('peerDomain')?.invalid) { <div class="error-msg">Peer Domain is
+                    required</div> }
             </div>
         </div>
 
@@ -66,7 +73,7 @@
             <label class="col-label">Time (optional)</label>
             <div class="col-input">
                 <div class="flex-input">
-                    <input type="text" mwlFlatpickr name="routingTime" [(ngModel)]="routingTime" [enableTime]="true"
+                    <input type="text" mwlFlatpickr formControlName="routingTime" [enableTime]="true"
                         dateFormat="Y-m-d H:i" altFormat="d/m/Y H:i" [altInput]="true" placeholder="dd/mm/yyyy --:--"
                         class="date-picker-input">
                     <button type="button" class="icon-btn" (click)="setToNow()">
@@ -101,15 +108,15 @@
                 <div class="summary-grid">
                     <div class="summary-item">
                         <span class="label">Switching Target:</span>
-                        <span class="value">{{ switchingTarget }}</span>
+                        <span class="value">{{ routingForm.get('switchingTarget')?.value }}</span>
                     </div>
                     <div class="summary-item">
                         <span class="label">Source Domain:</span>
-                        <span class="value">{{ domain }}</span>
+                        <span class="value">{{ routingForm.get('domain')?.value }}</span>
                     </div>
                     <div class="summary-item">
                         <span class="label">Peer Domain:</span>
-                        <span class="value">{{ peerDomain }}</span>
+                        <span class="value">{{ routingForm.get('peerDomain')?.value }}</span>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormGroup,
+  FormControl,
+  Validators, // Added for consistency even if not explicitly required by previous logic
+} from '@angular/forms';
 import {
   SharedTableComponent,
   TableColumn,
@@ -9,20 +14,22 @@ import {
 @Component({
   selector: 'app-domain',
   standalone: true,
-  imports: [CommonModule, FormsModule, SharedTableComponent],
+  imports: [CommonModule, ReactiveFormsModule, SharedTableComponent],
   templateUrl: './domain.component.html',
   styleUrls: ['./domain.component.css'],
 })
 export class DomainComponent {
-  // Form State
-  action: string = 'loadDomains';
-  selectedEnv: string = 'SYST';
+  // --- FORM DEFINITION ---
+  domainForm = new FormGroup({
+    action: new FormControl('loadDomains'),
+    environment: new FormControl('SYST', Validators.required),
+  });
 
   // Table State
   showTable: boolean = false;
   tableData: any[] = [];
 
-  // Column Definitions matching the screenshot
+  // Column Definitions
   tableCols: TableColumn[] = [
     { field: 'name', header: 'Name', type: 'text' },
     { field: 'state', header: 'State', type: 'text' },
@@ -34,7 +41,6 @@ export class DomainComponent {
   }
 
   loadMockData() {
-    // Generates S1FD02 through S1FD15 as seen in the image
     const domains = [];
     for (let i = 2; i <= 15; i++) {
       const num = i < 10 ? `0${i}` : `${i}`;
