@@ -1,23 +1,11 @@
-/* --- ANIMATION --- */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
+/* --- TABLE CONTAINER & ENTRANCE --- */
 .results-section {
     margin-top: 30px;
+    /* Uses global fadeInUp animation from styles.css */
     animation: fadeInUp 0.4s ease-out forwards;
-    font-family: inherit;
 }
 
-/* --- CONTROLS (Search) --- */
+/* --- CONTROLS (Search Section) --- */
 .table-controls {
     display: flex;
     justify-content: flex-end;
@@ -27,17 +15,13 @@
 .search-wrapper {
     position: relative;
     width: 250px;
-    transition: width 0.3s ease;
 }
 
 .search-wrapper input {
     width: 100%;
     padding: 10px 35px 10px 15px;
-    border: 1px solid #e0e0e0;
-
-    /* REVERTED: Standard slightly rounded corners */
+    border: 1px solid var(--border-color);
     border-radius: 4px;
-
     background: #fff;
     outline: none;
     font-size: 0.9rem;
@@ -46,9 +30,8 @@
 }
 
 .search-wrapper input:focus {
-    border-color: #005a9c;
+    border-color: var(--primary-color);
     box-shadow: 0 4px 10px rgba(0, 90, 156, 0.15);
-    width: 100%;
 }
 
 .search-icon {
@@ -60,15 +43,94 @@
     pointer-events: none;
 }
 
-/* --- MODERN TABLE CONTAINER --- */
+/* --- DATA TABLE --- */
 .table-responsive {
     width: 100%;
     overflow-x: auto;
     background: white;
     border-radius: 8px;
-    /* Slightly reduced container radius too */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
     border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.data-table th {
+    background-color: #e3effa;
+    /* Theme light blue */
+    color: var(--primary-color);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    padding: 16px 20px;
+    text-align: left;
+    border-bottom: 2px solid #d0e1f0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    white-space: nowrap;
+}
+
+.data-table td {
+    padding: 14px 20px;
+    color: #333;
+    border-bottom: 1px solid #f1f1f1;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f0f8ff;
+    /* Hover effect */
+}
+
+/* --- PAGINATION --- */
+.pagination-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    color: #666;
+    font-size: 0.9rem;
+    border-top: 1px solid #eee;
+}
+
+.page-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.page-btn {
+    width: 36px;
+    height: 36px;
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #555;
+    transition: all 0.2s ease;
+}
+
+.page-btn:hover:not(:disabled) {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 90, 156, 0.2);
+}
+
+.page-btn:disabled {
+    background-color: #f9f9f9;
+    color: #ccc;
+    cursor: default;
+    border-color: #eee;
 }
 
 /* Custom Scrollbar */
@@ -84,147 +146,4 @@
 .table-responsive::-webkit-scrollbar-thumb {
     background: #ccc;
     border-radius: 4px;
-}
-
-.table-responsive::-webkit-scrollbar-thumb:hover {
-    background: #bbb;
-}
-
-.data-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.95rem;
-}
-
-/* Header Styling */
-.data-table th {
-    /* REVERTED: Original Light Blue Background */
-    background-color: #e3effa;
-    color: #005a9c;
-
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
-    padding: 16px 20px;
-    text-align: left;
-    border-bottom: 2px solid #d0e1f0;
-    /* Slightly darker blue border */
-
-    /* Sticky Header */
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    white-space: nowrap;
-}
-
-/* Cell Styling */
-.data-table td {
-    padding: 14px 20px;
-    color: #333;
-    border-bottom: 1px solid #f1f1f1;
-    vertical-align: middle;
-    white-space: nowrap;
-}
-
-/* Row Hover Effect */
-.data-table tbody tr {
-    transition: background-color 0.15s ease;
-}
-
-.data-table tbody tr:hover {
-    background-color: #f0f8ff;
-    /* AliceBlue hover to match header theme */
-}
-
-.data-table tbody tr:last-child td {
-    border-bottom: none;
-}
-
-.empty-cell {
-    text-align: center;
-    padding: 40px;
-    color: #888;
-    font-style: italic;
-}
-
-/* --- STATUS BADGES (Pill Style) --- */
-.status-badge {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 50px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    line-height: 1.2;
-}
-
-.complete {
-    background-color: #e6f6ee;
-    color: #0f5132;
-}
-
-.pending {
-    background-color: #fff8e1;
-    color: #b45309;
-}
-
-.failed {
-    background-color: #fee2e2;
-    color: #991b1b;
-}
-
-/* --- PAGINATION --- */
-.pagination-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 15px;
-    /* Added side padding */
-    color: #666;
-    font-size: 0.9rem;
-    border-top: 1px solid #eee;
-    /* Clear separation */
-}
-
-.page-info {
-    font-weight: 500;
-    color: #888;
-}
-
-.page-controls {
-    display: flex;
-    gap: 8px;
-}
-
-.page-btn {
-    width: 36px;
-    height: 36px;
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: #555;
-    transition: all 0.2s ease;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-.page-btn:hover:not(:disabled) {
-    background-color: #005a9c;
-    color: white;
-    border-color: #005a9c;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0, 90, 156, 0.2);
-}
-
-.page-btn:disabled {
-    background-color: #f9f9f9;
-    color: #ccc;
-    cursor: default;
-    border-color: #eee;
-    box-shadow: none;
 }

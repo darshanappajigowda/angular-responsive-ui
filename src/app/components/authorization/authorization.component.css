@@ -1,91 +1,26 @@
-/* --- GLOBAL LAYOUT (Standard) --- */
-.form-container {
-    width: 100%;
-    max-width: 1100px;
-    margin: 10px auto 40px auto;
-    padding: 0 20px;
-}
-
-h2 {
-    text-align: left;
-    color: #2c3e50;
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-weight: 500;
-    font-size: 1.5rem;
-    border-bottom: 3px solid #ffbb00;
-    display: inline-block;
-    padding-bottom: 8px;
-}
-
-/* Form Grid */
-.form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 40px;
-    row-gap: 15px;
-    margin-bottom: 30px;
-}
-
-.full-width {
-    grid-column: 1 / -1;
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.col-label {
-    font-weight: 600;
-    color: #444;
-    margin-bottom: 8px;
-    font-size: 0.9rem;
-}
-
-select,
-input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-family: inherit;
-    font-size: 1rem;
-}
-
 /* Submit Button */
-.form-actions {
+/* .form-actions {
     display: flex;
     justify-content: flex-end;
     padding-top: 20px;
     border-top: 1px solid #eee;
-}
+} */
 
-.deploy-btn {
-    background-color: #005a9c;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    display: flex;
-    gap: 8px;
-}
 
 /* --- TABLE STYLES --- */
 .results-section {
     animation: fadeInUp 0.4s ease-out forwards;
 }
 
+/* 
 .table-responsive {
     width: 100%;
     overflow-x: auto;
     background: white;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-}
-
+} */
+/* 
 .data-table {
     width: 100%;
     border-collapse: collapse;
@@ -110,7 +45,7 @@ input {
     vertical-align: middle;
 }
 
-/* Status Badges */
+/* Status Badges 
 .status-badge {
     padding: 4px 12px;
     border-radius: 50px;
@@ -132,7 +67,7 @@ input {
 .failed {
     background-color: #fee2e2;
     color: #991b1b;
-}
+} */
 
 /* --- ACCORDION INTERACTION --- */
 .clickable-row {
@@ -337,85 +272,6 @@ input {
     pointer-events: none;
 }
 
-/* --- TOAST NOTIFICATION --- */
-.toast-notification {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: #ffffff;
-    border-left: 5px solid #28a745;
-
-    /* Increased right padding to make room for the close button */
-    padding: 16px 45px 16px 20px;
-
-    border-radius: 4px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    z-index: 1000;
-
-    opacity: 0;
-    transform: translateX(20px);
-    pointer-events: none;
-    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.toast-notification.show {
-    opacity: 1;
-    transform: translateX(0);
-    pointer-events: auto;
-}
-
-.toast-notification.error {
-    border-left-color: #dc3545;
-}
-
-.toast-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.toast-notification:not(.error) .toast-icon {
-    color: #28a745;
-}
-
-.toast-notification.error .toast-icon {
-    color: #dc3545;
-}
-
-.toast-message {
-    font-size: 0.95rem;
-    color: #333;
-    font-weight: 500;
-}
-
-/* --- NEW: CLOSE BUTTON STYLES --- */
-.toast-close {
-    background: none;
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-    color: #999;
-
-    /* Absolute position to keep it fixed to the right */
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    transition: background 0.2s, color 0.2s;
-}
-
-.toast-close:hover {
-    color: #333;
-    background-color: #f5f5f5;
-}
 
 /* Animations */
 @keyframes fadeInUp {

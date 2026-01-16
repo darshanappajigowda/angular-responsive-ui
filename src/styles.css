@@ -3,13 +3,15 @@
 
 :root {
     --primary-color: #005a9c;
+    --secondary-color: #ffbb00;
     --text-color: #333;
     --bg-color: #f5f7fa;
     --sidebar-bg: #ffffff;
     --border-color: #e0e0e0;
     --font-family: 'Ubuntu', sans-serif;
-    --nav-width: 300px;
-    /* Must match your Sidebar width */
+    --nav-width: 260px;
+    --error-red: #dc3545;
+    --success-green: #28a745;
 }
 
 * {
@@ -27,99 +29,261 @@ html {
 }
 
 /* --- LAYOUT ARCHITECTURE --- */
-
-/* 1. Main Container (Vertical Column) */
 .app-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    /* Ensures full height */
 }
 
-/* 2. Header (Static Block) */
 app-header {
     width: 100%;
-    z-index: 10;
-    /* No fixed position, it sits naturally at the top */
+    z-index: 1000;
 }
 
-/* 3. Lower Body (Horizontal Row) */
-.lower-body {
+.main-layout {
     display: flex;
-    /* Aligns Sidebar and Content side-by-side */
     flex: 1;
-    /* Takes up all remaining vertical space */
+    width: 100%;
 }
 
-/* 4. Left Nav (Static Width) */
-app-left-nav {
+.sidebar {
     width: var(--nav-width);
     background-color: var(--sidebar-bg);
     border-right: 1px solid var(--border-color);
     flex-shrink: 0;
-    /* Prevents sidebar from getting squashed */
+    transition: transform 0.3s ease;
 }
 
-/* 5. Main Content (Flexible Width) */
-.main-content {
+.content-area {
     flex: 1;
-    /* Takes all remaining width automatically */
     padding: 30px;
-    /* Clean spacing for your forms */
-    background-color: var(--bg-color);
-    overflow-x: hidden;
-    /* Prevents horizontal scrollbars */
+    background-color: #fff;
+    overflow-y: auto;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
 }
 
-/* --- UTILITIES --- */
-input,
-select {
-    padding: 10px;
+/* --- SHARED FORM STYLES --- */
+.form-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 10px auto 40px auto;
+    padding: 0 20px;
+}
+
+h2 {
+    text-align: left;
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-size: 1.5rem;
+    border-bottom: 3px solid var(--secondary-color);
+    display: inline-block;
+    padding-bottom: 8px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
+    row-gap: 15px;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.col-label {
+    text-align: left;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+    font-size: 0.9rem;
+}
+
+/* --- SHARED CONTROLS --- */
+input[type="text"],
+select,
+.readonly-field,
+.date-picker-input {
+    width: 100%;
+    padding: 12px 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-family: inherit;
-    width: 100%;
-    background: white;
+    font-size: 1rem;
+    background-color: #fff;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 input:focus,
 select:focus {
-    outline: 2px solid var(--primary-color);
-    border-color: transparent;
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 90, 156, 0.1);
 }
 
-button {
-    cursor: pointer;
+.readonly-field {
+    background-color: #f8f9fa;
+    color: #666;
+    cursor: default;
+    border-color: #ddd;
 }
 
-/* Center Utility for Login Screen if needed later */
-.flex-center {
+/* Pill Selectors */
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 5px 0;
+}
+
+.pill-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
-}
-
-.pill-wrapper input {
-    position: absolute;
-    /* Move it off-screen rather than making it 0x0 */
-    left: -9999px;
-    opacity: 0;
-}
-
-/* Ensure the label is clickable */
-.pill-label {
+    padding: 10px 24px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    color: #555;
+    font-weight: 500;
     cursor: pointer;
+    transition: all 0.2s ease;
     user-select: none;
-    display: inline-flex;
-    /* Use inline-flex to prevent wrapping issues */
+}
+
+.pill-btn:hover {
+    background-color: #f8f9fa;
+    border-color: #bbb;
+}
+
+.pill-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 10px rgba(0, 90, 156, 0.3);
+}
+
+/* Buttons */
+.deploy-btn,
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s, transform 0.1s;
+    display: flex;
     align-items: center;
     justify-content: center;
+    gap: 10px;
 }
 
-/* ========================================= */
-/* GLOBAL MODAL STYLES                       */
-/* ========================================= */
+.deploy-btn:hover,
+.btn-primary:hover {
+    background-color: #004275;
+}
+
+.deploy-btn:active,
+.btn-primary:active {
+    transform: translateY(1px);
+}
+
+.btn-secondary {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    color: #555;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-secondary:hover {
+    background-color: #f5f5f5;
+    border-color: #bbb;
+}
+
+/* Input with icon-button (e.g. Datepicker) */
+.flex-input {
+    display: flex;
+    width: 100%;
+}
+
+.flex-input input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: none;
+}
+
+.icon-btn {
+    border: 1px solid #ccc;
+    border-left: none;
+    background-color: #f8f9fa;
+    padding: 0 15px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    transition: background 0.2s;
+}
+
+.icon-btn:hover {
+    background-color: #e2e6ea;
+    color: var(--primary-color);
+}
+
+/* --- VALIDATION --- */
+.required {
+    color: var(--error-red);
+    margin-left: 2px;
+}
+
+.input-error {
+    border-color: var(--error-red) !important;
+    background-color: #fff8f8;
+}
+
+.error-msg {
+    color: var(--error-red);
+    font-size: 0.8rem;
+    margin-top: 5px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    animation: fadeIn 0.3s ease;
+}
+
+.error-msg::before {
+    content: "!";
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 14px;
+    height: 14px;
+    background-color: var(--error-red);
+    color: white;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+/* --- SHARED MODAL --- */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -127,12 +291,10 @@ button {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    /* Dimmed background */
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 2000;
-    /* Ensure it's above everything */
     backdrop-filter: blur(2px);
     animation: fadeIn 0.2s ease-out;
 }
@@ -144,9 +306,7 @@ button {
     border-radius: 8px;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     overflow: hidden;
-    padding: 0;
     animation: scaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    /* Handled by header/body/footer */
 }
 
 .modal-header {
@@ -157,7 +317,7 @@ button {
 
 .modal-header h3 {
     margin: 0;
-    color: #005a9c;
+    color: var(--primary-color);
     font-size: 1.2rem;
     font-weight: 600;
 }
@@ -173,14 +333,12 @@ button {
     margin-bottom: 20px;
 }
 
-/* Summary Box inside Modal */
 .summary-grid {
     background-color: #f9fbfd;
     border: 1px solid #e3effa;
     border-radius: 6px;
     padding: 15px;
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 10px;
 }
 
@@ -207,7 +365,6 @@ button {
     font-weight: 500;
 }
 
-/* Modal Actions */
 .modal-actions {
     padding: 15px 25px;
     background-color: #fff;
@@ -217,27 +374,272 @@ button {
     gap: 15px;
 }
 
-/* Button variants for modals */
-.btn-secondary {
+/* --- SHARED TOAST --- */
+.toast-notification {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    background-color: #ffffff;
+    border-left: 5px solid var(--success-green);
+    padding: 16px 45px 16px 20px;
+    border-radius: 4px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    z-index: 2000;
+    opacity: 0;
+    transform: translateX(20px);
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    max-width: 400px;
+    width: auto;
+}
+
+.toast-notification.show {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+.toast-notification.error {
+    border-left-color: var(--error-red);
+}
+
+.toast-icon {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toast-notification:not(.error) .toast-icon {
+    color: var(--success-green);
+}
+
+.toast-notification.error .toast-icon {
+    color: var(--error-red);
+}
+
+.toast-message {
+    font-size: 0.95rem;
+    color: #333;
+    font-weight: 500;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    color: #999;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+}
+
+.toast-close:hover {
+    color: #333;
+}
+
+/* --- SHARED TABLES --- */
+/* src/styles.css */
+
+/* --- SHARED TABLE STRUCTURE --- */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.data-table th {
+    background-color: #e3effa;
+    color: var(--primary-color);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    padding: 16px 20px;
+    text-align: left;
+    border-bottom: 2px solid #d0e1f0;
+}
+
+.data-table td {
+    padding: 14px 20px;
+    color: #333;
+    border-bottom: 1px solid #f1f1f1;
+    vertical-align: middle;
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.complete {
+    background-color: #e6f6ee;
+    color: #0f5132;
+}
+
+.pending {
+    background-color: #fff8e1;
+    color: #b45309;
+}
+
+.failed {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* Add these missing pieces to your current src/styles.css */
+
+/* --- SHARED PILL BUTTONS --- */
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 5px 0;
+}
+
+.pill-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 24px;
     background-color: #fff;
     border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 0.95rem;
     color: #555;
-    padding: 10px 20px;
-    border-radius: 4px;
+    font-weight: 500;
     cursor: pointer;
-    font-weight: 600;
+    transition: all 0.2s ease;
+    user-select: none;
 }
 
-.btn-primary {
-    background-color: #005a9c;
+.pill-btn:hover {
+    background-color: #f8f9fa;
+    border-color: #bbb;
+}
+
+.pill-btn.active {
+    background-color: var(--primary-color);
     color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 600;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 10px rgba(0, 90, 156, 0.3);
 }
 
+/* --- SHARED VALIDATION & ERROR MESSAGES --- */
+.required {
+    color: #dc3545;
+}
+
+.input-error {
+    border-color: #dc3545 !important;
+    background-color: #fff8f8;
+}
+
+.error-msg {
+    color: #dc3545;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.error-msg::before {
+    content: "!";
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 14px;
+    height: 14px;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+/* --- SHARED TOAST NOTIFICATIONS --- */
+.toast-notification {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    background-color: #ffffff;
+    border-left: 5px solid #28a745;
+    padding: 16px 45px 16px 20px;
+    border-radius: 4px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    z-index: 3000;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    max-width: 400px;
+}
+
+.toast-notification.show {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+.toast-notification.error {
+    border-left-color: #dc3545;
+}
+
+.toast-icon {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.toast-notification.error .toast-icon {
+    color: #dc3545;
+}
+
+.toast-message {
+    font-size: 0.95rem;
+    color: #333;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #999;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+/* --- ANIMATIONS --- */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -248,7 +650,6 @@ button {
     }
 }
 
-/* The smooth 'pop' effect for the content box */
 @keyframes scaleUp {
     from {
         transform: scale(0.9);
@@ -258,5 +659,28 @@ button {
     to {
         transform: scale(1);
         opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 900px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .deploy-btn {
+        width: 100%;
     }
 }
