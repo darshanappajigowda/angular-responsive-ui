@@ -1,4 +1,4 @@
-/* Keep only specific status and badge styles */
+/* Container positioning */
 .status-wrapper {
     position: relative;
 }
@@ -8,20 +8,48 @@
     top: 50%;
     right: 12px;
     transform: translateY(-50%);
-    animation: iconFadeIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    animation: iconFadeIn 0.3s ease-out;
 }
 
-.valid-icon {
-    color: #28a745;
-}
+/* --- STATUS COLORS --- */
 
+/* Valid (Green) */
 .input-valid {
     border-color: #28a745 !important;
     background-color: #f0fff4 !important;
     color: #155724 !important;
 }
 
-/* ... other fortify and domain badge styles ... */
+.valid-icon {
+    color: #28a745;
+}
+
+/* Invalid (Red) */
+.input-invalid {
+    border-color: #dc3545 !important;
+    background-color: #fff5f5 !important;
+    color: #721c24 !important;
+}
+
+.invalid-icon {
+    color: #dc3545;
+}
+
+/* Warning/Error (Yellow/Orange) */
+.input-warning {
+    border-color: #ffc107 !important;
+    background-color: #fff3cd !important;
+    color: #856404 !important;
+}
+
+.warning-icon {
+    color: #856404;
+}
+
 @keyframes iconFadeIn {
     from {
         opacity: 0;

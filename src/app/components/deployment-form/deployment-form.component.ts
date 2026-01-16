@@ -44,8 +44,8 @@ export class DeploymentFormComponent implements OnInit {
   ngOnInit() {
     // Simulate loading external status
     setTimeout(() => {
-      this.fortifyStatus = 'Valid';
-    }, 1000);
+      this.fortifyStatus = 'Error fetching status';
+    }, 5000);
   }
 
   // Helper to set time programmatically
