@@ -4,15 +4,14 @@
         <div class="form-group full-width">
             <label class="col-label">Action</label>
             <div class="radio-group">
-                <div class="pill-wrapper">
-                    <input type="radio" id="info-env" name="infoAction" value="envInfo" [(ngModel)]="selectedAction">
-                    <label for="info-env" class="pill-label">Environment Info</label>
-                </div>
-                <div class="pill-wrapper">
-                    <input type="radio" id="info-hist" name="infoAction" value="requestHistory"
-                        [(ngModel)]="selectedAction">
-                    <label for="info-hist" class="pill-label">Request History</label>
-                </div>
+                <button type="button" class="pill-btn" [class.active]="selectedAction === 'envInfo'"
+                    (click)="selectedAction = 'envInfo'">
+                    Environment Info
+                </button>
+                <button type="button" class="pill-btn" [class.active]="selectedAction === 'requestHistory'"
+                    (click)="selectedAction = 'requestHistory'">
+                    Request History
+                </button>
             </div>
         </div>
 

@@ -26,17 +26,17 @@ export class AdministrationComponent {
   toastType: 'success' | 'error' = 'success';
   toastTimeout: any; // Added for auto-close timer
 
+  showConfirmation = false;
+
   setToNow() {
     this.adminTime = new Date();
   }
 
   onSubmit() {
     this.isSubmitted = true;
-
     if (this.environment && this.domain && this.adminTarget) {
-      this.performAction();
+      this.showConfirmation = true; // Open modal instead of performing action
     } else {
-      // VALIDATION ERROR: Set autoClose to true
       this.showToast('Please fill in all required fields.', 'error', true);
     }
   }
@@ -110,5 +110,14 @@ export class AdministrationComponent {
       clearTimeout(this.toastTimeout);
       this.toastTimeout = null;
     }
+  }
+
+  confirmAction() {
+    this.showConfirmation = false;
+    this.performAction(); // Your existing logic to call the API
+  }
+
+  cancelAction() {
+    this.showConfirmation = false;
   }
 }

@@ -5,14 +5,10 @@
         <div class="form-group full-width">
             <label class="col-label">Action</label>
             <div class="radio-group">
-                <div class="pill-wrapper">
-                    <input type="radio" id="rt-switch" name="action" value="Switch" [(ngModel)]="action">
-                    <label for="rt-switch" class="pill-label">Switch</label>
-                </div>
-                <div class="pill-wrapper">
-                    <input type="radio" id="rt-connect" name="action" value="Connect" [(ngModel)]="action">
-                    <label for="rt-connect" class="pill-label">Connect</label>
-                </div>
+                <button type="button" class="pill-btn" [class.active]="action === 'Switch'"
+                    (click)="action = 'Switch'">Switch</button>
+                <button type="button" class="pill-btn" [class.active]="action === 'Connect'"
+                    (click)="action = 'Connect'">Connect</button>
             </div>
         </div>
 
@@ -93,6 +89,37 @@
             </button>
         </div>
     </form>
+
+    @if (showConfirmation) {
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Routing Change</h3>
+            </div>
+            <div class="modal-body">
+                <p class="modal-intro">Verify the routing switch details below:</p>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <span class="label">Switching Target:</span>
+                        <span class="value">{{ switchingTarget }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Source Domain:</span>
+                        <span class="value">{{ domain }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Peer Domain:</span>
+                        <span class="value">{{ peerDomain }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" (click)="cancelRouting()">Cancel</button>
+                <button class="btn-primary" (click)="confirmRouting()">Confirm</button>
+            </div>
+        </div>
+    </div>
+    }
 
     <div class="toast-notification" [class.show]="toastVisible" [class.error]="toastType === 'error'">
         <div class="toast-icon">

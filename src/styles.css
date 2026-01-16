@@ -8,7 +8,7 @@
     --sidebar-bg: #ffffff;
     --border-color: #e0e0e0;
     --font-family: 'Ubuntu', sans-serif;
-    --nav-width: 260px;
+    --nav-width: 300px;
     /* Must match your Sidebar width */
 }
 
@@ -98,4 +98,165 @@ button {
     align-items: center;
     justify-content: center;
     height: 100%;
+}
+
+.pill-wrapper input {
+    position: absolute;
+    /* Move it off-screen rather than making it 0x0 */
+    left: -9999px;
+    opacity: 0;
+}
+
+/* Ensure the label is clickable */
+.pill-label {
+    cursor: pointer;
+    user-select: none;
+    display: inline-flex;
+    /* Use inline-flex to prevent wrapping issues */
+    align-items: center;
+    justify-content: center;
+}
+
+/* ========================================= */
+/* GLOBAL MODAL STYLES                       */
+/* ========================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Dimmed background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    /* Ensure it's above everything */
+    backdrop-filter: blur(2px);
+    animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    padding: 0;
+    animation: scaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* Handled by header/body/footer */
+}
+
+.modal-header {
+    background-color: #f8f9fa;
+    padding: 15px 25px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: #005a9c;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+.modal-intro {
+    margin-top: 0;
+    color: #555;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+/* Summary Box inside Modal */
+.summary-grid {
+    background-color: #f9fbfd;
+    border: 1px solid #e3effa;
+    border-radius: 6px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed #e0e0e0;
+    padding-bottom: 8px;
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.summary-item .label {
+    font-weight: 600;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.summary-item .value {
+    color: #333;
+    font-weight: 500;
+}
+
+/* Modal Actions */
+.modal-actions {
+    padding: 15px 25px;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+/* Button variants for modals */
+.btn-secondary {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    color: #555;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background-color: #005a9c;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* The smooth 'pop' effect for the content box */
+@keyframes scaleUp {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }

@@ -7,30 +7,18 @@
         <div class="form-group full-width">
             <label class="col-label">Action</label>
             <div class="radio-group">
-                <div class="pill-wrapper">
-                    <input type="radio" id="act-install" name="action" value="install" [(ngModel)]="action">
-                    <label for="act-install" class="pill-label">Install</label>
-                </div>
-                <div class="pill-wrapper">
-                    <input type="radio" id="act-uninstall" name="action" value="uninstall" [(ngModel)]="action">
-                    <label for="act-uninstall" class="pill-label">Uninstall</label>
-                </div>
-                <div class="pill-wrapper">
-                    <input type="radio" id="act-start" name="action" value="start" [(ngModel)]="action">
-                    <label for="act-start" class="pill-label">Start</label>
-                </div>
-                <div class="pill-wrapper">
-                    <input type="radio" id="act-restart" name="action" value="restart" [(ngModel)]="action">
-                    <label for="act-restart" class="pill-label">Restart</label>
-                </div>
-                <div class="pill-wrapper">
-                    <input type="radio" id="act-stop" name="action" value="stop" [(ngModel)]="action">
-                    <label for="act-stop" class="pill-label">Stop</label>
-                </div>
-                <div class="pill-wrapper">
-                    <input type="radio" id="act-delete" name="action" value="delete" [(ngModel)]="action">
-                    <label for="act-delete" class="pill-label">Delete</label>
-                </div>
+                <button type="button" class="pill-btn" [class.active]="action === 'install'"
+                    (click)="action = 'install'">Install</button>
+                <button type="button" class="pill-btn" [class.active]="action === 'uninstall'"
+                    (click)="action = 'uninstall'">Uninstall</button>
+                <button type="button" class="pill-btn" [class.active]="action === 'start'"
+                    (click)="action = 'start'">Start</button>
+                <button type="button" class="pill-btn" [class.active]="action === 'restart'"
+                    (click)="action = 'restart'">Restart</button>
+                <button type="button" class="pill-btn" [class.active]="action === 'stop'"
+                    (click)="action = 'stop'">Stop</button>
+                <button type="button" class="pill-btn" [class.active]="action === 'delete'"
+                    (click)="action = 'delete'">Delete</button>
             </div>
         </div>
 
@@ -210,23 +198,21 @@
     <div class="toast-notification" [class.show]="toastVisible" [class.error]="toastType === 'error'">
         <div class="toast-icon">
             @if (toastType === 'success') {
-            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"
-                stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
                 <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
             } @else {
-            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="3" fill="none"
                 stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
-                <line x1="12" y1="8" x2="12" y2="12"></line>
-                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                <line x1="12" y1="8" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12" y2="17"></line>
             </svg>
             }
         </div>
         <span class="toast-message">{{ toastMessage }}</span>
         <button class="toast-close" (click)="closeToast()">
-            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"
-                stroke-linecap="round" stroke-linejoin="round">
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>

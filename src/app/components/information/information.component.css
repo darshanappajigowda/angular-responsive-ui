@@ -115,46 +115,37 @@ input:focus {
     font-weight: bold;
 }
 
-/* PILLS */
 .radio-group {
     display: flex;
+    flex-wrap: wrap;
     gap: 12px;
     padding: 5px 0;
 }
 
-.pill-wrapper {
-    position: relative;
-    display: inline-block;
-}
-
-.pill-wrapper input {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.pill-label {
-    padding: 10px 24px;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: 500;
-    color: #555;
-    user-select: none;
-    transition: all 0.2s;
+.pill-btn {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 10px 24px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    color: #555;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    font-family: inherit;
 }
 
-.pill-label:hover {
+.pill-btn:hover {
     background-color: #f8f9fa;
-    transform: translateY(-1px);
+    border-color: #bbb;
 }
 
-.pill-wrapper input:checked+.pill-label {
+/* Active State (Selection) */
+.pill-btn.active {
     background-color: #005a9c;
     color: white;
     border-color: #005a9c;
@@ -230,6 +221,8 @@ input:focus {
     margin-top: 2px;
     display: flex;
     color: #dc3545;
+    justify-content: center;
+    align-items: center;
     /* Error Red */
 }
 

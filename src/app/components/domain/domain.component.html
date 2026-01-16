@@ -6,12 +6,10 @@
         <div class="form-group full-width">
             <label class="col-label">Action</label>
             <div class="radio-group">
-                <div class="pill-wrapper">
-                    <input type="radio" id="act-load" name="action" value="loadDomains" [(ngModel)]="action">
-                    <label for="act-load" class="pill-label">
-                        Load Domains
-                    </label>
-                </div>
+                <button type="button" class="pill-btn" [class.active]="action === 'loadDomains'"
+                    (click)="action = 'loadDomains'">
+                    Load Domains
+                </button>
             </div>
         </div>
 

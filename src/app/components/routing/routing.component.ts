@@ -18,6 +18,7 @@ export class RoutingComponent {
   domain: string = '';
   peerDomain: string = '';
   routingTime: Date | undefined;
+  showConfirmation = false;
 
   // UI States
   isSubmitted: boolean = false;
@@ -32,19 +33,25 @@ export class RoutingComponent {
 
   onSubmit() {
     this.isSubmitted = true;
-
-    // Validation: Ensure required fields are filled
     if (
       this.environment &&
       this.switchingTarget &&
       this.domain &&
       this.peerDomain
     ) {
-      this.performRoutingAction();
+      this.showConfirmation = true;
     } else {
-      // Validation Error Toast (Auto-closes in 3 seconds)
       this.showToast('Please fill in all required fields.', 'error', true);
     }
+  }
+
+  confirmRouting() {
+    this.showConfirmation = false;
+    this.performRoutingAction();
+  }
+
+  cancelRouting() {
+    this.showConfirmation = false;
   }
 
   performRoutingAction() {

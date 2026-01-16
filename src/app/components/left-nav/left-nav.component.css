@@ -114,6 +114,17 @@
     border-bottom-left-radius: 0;
 }
 
+.arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    flex-shrink: 0;
+    /* Prevents chevron from squishing */
+    height: 100%;
+    /* Ensures it spans the full flex height for alignment */
+}
+
 .nav-list li a.active .arrow {
     color: var(--primary-color);
 }

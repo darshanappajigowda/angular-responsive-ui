@@ -74,19 +74,7 @@ input:focus {
     padding: 5px 0;
 }
 
-.pill-wrapper {
-    position: relative;
-    display: inline-block;
-}
-
-.pill-wrapper input[type="radio"] {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.pill-label {
+.pill-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -100,18 +88,27 @@ input:focus {
     cursor: pointer;
     transition: all 0.2s ease;
     user-select: none;
+    font-family: inherit;
 }
 
-.pill-label:hover {
+.pill-btn:hover {
     background-color: #f8f9fa;
     border-color: #bbb;
 }
 
-.pill-wrapper input[type="radio"]:checked+.pill-label {
+.pill-btn.active {
     background-color: #005a9c;
     color: white;
     border-color: #005a9c;
     box-shadow: 0 4px 10px rgba(0, 90, 156, 0.3);
+}
+
+.toast-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Action Buttons */

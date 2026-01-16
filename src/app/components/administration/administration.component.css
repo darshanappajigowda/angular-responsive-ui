@@ -80,41 +80,30 @@ input:focus {
     padding: 5px 0;
 }
 
-.pill-wrapper {
-    position: relative;
-    display: inline-block;
-}
-
-.pill-wrapper input {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.pill-label {
+.pill-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 10px 24px;
-    background: #fff;
+    background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 20px;
     font-size: 0.95rem;
-    font-weight: 500;
     color: #555;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
     user-select: none;
+    font-family: inherit;
 }
 
-.pill-label:hover {
+.pill-btn:hover {
     background-color: #f8f9fa;
     border-color: #bbb;
-    transform: translateY(-1px);
 }
 
-.pill-wrapper input:checked+.pill-label {
+/* Active State (Selection) */
+.pill-btn.active {
     background-color: #005a9c;
     color: white;
     border-color: #005a9c;
@@ -262,6 +251,8 @@ input:focus {
     flex-shrink: 0;
     margin-top: 2px;
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .toast-notification:not(.error) .toast-icon {

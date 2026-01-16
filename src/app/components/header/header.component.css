@@ -12,17 +12,29 @@
     z-index: 1000;
 }
 
-/* 1. LEFT SECTION (Logo) */
 .header-left {
     width: 260px;
-    /* MATCHES SIDEBAR WIDTH EXACTLY */
+    /* Reverted to match original sidebar width */
     min-width: 260px;
     display: flex;
     align-items: center;
     padding-left: 20px;
     border-right: 1px solid rgba(255, 255, 255, 0.1);
-    /* Optional: visual separator */
+    /* Restored original semi-transparent border */
     height: 100%;
+    background-color: transparent;
+    /* Background now inherits primary blue from .top-header */
+}
+
+.logo-text {
+    color: white;
+    /* Reverted to white */
+    font-weight: 700;
+}
+
+.logo-icon {
+    color: white;
+    /* Reverted to white */
 }
 
 .burger-btn {
@@ -34,7 +46,9 @@
     /* Hidden on Desktop */
     padding: 0;
     color: white;
+    /* Reverted to white icon color */
 }
+
 
 .logo-container {
     display: flex;
@@ -44,11 +58,13 @@
     font-size: 1.35rem;
 }
 
-.logo-icon {
+/* .logo-icon {
     width: 32px;
-    /* Increased from 28px */
-    height: 32px;
+    /* Increased from 28px 
+height: 32px;
 }
+
+*/
 
 /* 2. CENTER SECTION (Title) */
 .header-center {
@@ -203,7 +219,7 @@ h1 {
 @media (max-width: 1024px) {
     .header-left {
         width: auto;
-        /* Allow shrinking on tablet */
+        border: none;
         min-width: 0;
     }
 

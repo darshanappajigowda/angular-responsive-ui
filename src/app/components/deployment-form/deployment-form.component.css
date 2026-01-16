@@ -26,14 +26,11 @@ h2 {
     color: #2c3e50;
     margin-top: 0;
     margin-bottom: 20px;
-    /* Reduced from 30px */
     font-weight: 500;
     font-size: 1.5rem;
-
-    /* Keep the underline if you like it, or remove these 3 lines for a cleaner look */
-    /* border-bottom: 2px solid #ffbb00;
+    border-bottom: 3px solid #ffbb00;
     display: inline-block;
-    padding-bottom: 8px; */
+    padding-bottom: 8px;
 }
 
 /* 3. GRID SYSTEM */
@@ -110,28 +107,11 @@ select:focus {
     padding: 5px 0;
 }
 
-/* Wrapper just holds them together */
-.pill-wrapper {
-    position: relative;
-    display: inline-block;
-}
-
-/* 1. HIDE the actual input completely */
-.pill-wrapper input[type="radio"] {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-    margin: 0;
-}
-
-/* 2. Style the LABEL (which acts as the button) */
-.pill-label {
+.pill-btn {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 10px 24px;
-    /* Nice click area */
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 20px;
@@ -139,27 +119,29 @@ select:focus {
     color: #555;
     font-weight: 500;
     cursor: pointer;
-    /* Shows hand cursor */
     transition: all 0.2s ease;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     user-select: none;
+    font-family: inherit;
 }
 
-/* Hover Effect */
-.pill-label:hover {
+.pill-btn:hover {
     background-color: #f8f9fa;
     border-color: #bbb;
-    transform: translateY(-1px);
 }
 
-/* 3. SELECTED STATE */
-/* When input with ID 'x' is checked, style the label immediately after it */
-.pill-wrapper input[type="radio"]:checked+.pill-label {
+.pill-btn.active {
     background-color: #005a9c;
-    /* Primary Blue */
     color: white;
     border-color: #005a9c;
     box-shadow: 0 4px 10px rgba(0, 90, 156, 0.3);
+}
+
+.toast-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* 9. Date/Time Row */
@@ -550,6 +532,8 @@ select:focus {
     /* Align icon vertically with the first line of text */
     margin-top: 2px;
     display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .toast-notification:not(.error) .toast-icon {
