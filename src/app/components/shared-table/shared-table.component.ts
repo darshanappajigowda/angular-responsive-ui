@@ -19,6 +19,9 @@ export class SharedTableComponent implements OnChanges {
   @Input() data: any[] = [];
   @Input() columns: TableColumn[] = [];
 
+  // New Input: Default to 1400px (for Info screen), but allow override
+  @Input() minWidth: string = '1400px';
+
   searchText: string = '';
 
   // Pagination State
@@ -26,27 +29,21 @@ export class SharedTableComponent implements OnChanges {
   pageSize: number = 10;
 
   // Data State
-  filteredData: any[] = []; // Holds data after search is applied
-  paginatedData: any[] = []; // Holds only the 10 rows visible on screen
+  filteredData: any[] = [];
+  paginatedData: any[] = [];
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['data']) {
-      // When new API data arrives, reset everything
       this.filterData();
     }
   }
 
-  // --- SEARCH LOGIC ---
   filterData() {
-    // 1. If search is empty, filtered data is just the original data
     if (!this.searchText) {
       this.filteredData = [...this.data];
     } else {
-      // 2. Otherwise, filter rows
       const searchLower = this.searchText.toLowerCase();
-
       this.filteredData = this.data.filter((row) => {
-        // Check if ANY column contains the search text
         return this.columns.some((col) => {
           const val = row[col.field]
             ? String(row[col.field]).toLowerCase()
@@ -55,13 +52,10 @@ export class SharedTableComponent implements OnChanges {
         });
       });
     }
-
-    // 3. Reset to page 1 and re-slice the data
     this.currentPage = 1;
     this.updatePagination();
   }
 
-  // --- PAGINATION LOGIC ---
   get totalPages(): number {
     return Math.ceil(this.filteredData.length / this.pageSize) || 1;
   }
@@ -75,7 +69,6 @@ export class SharedTableComponent implements OnChanges {
   }
 
   updatePagination() {
-    // Slice from FILTERED data, not raw data
     this.paginatedData = this.filteredData.slice(
       this.startIndex,
       this.endIndex

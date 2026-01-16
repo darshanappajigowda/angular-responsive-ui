@@ -3,18 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { LeftNavComponent } from './components/left-nav/left-nav.component';
-import { RightPanelComponent } from './components/right-panel/right-panel.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterOutlet,
-    HeaderComponent,
-    LeftNavComponent,
-    RightPanelComponent,
-  ],
+  imports: [CommonModule, RouterOutlet, HeaderComponent, LeftNavComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })

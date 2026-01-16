@@ -1,4 +1,4 @@
-/* GLOBAL FONT & CONTAINER */
+/* CONTAINER & HEADER */
 .form-container {
     width: 100%;
     max-width: 1100px;
@@ -6,7 +6,6 @@
     padding: 0 20px;
 }
 
-/* Heading */
 h2 {
     text-align: left;
     color: #2c3e50;
@@ -15,36 +14,32 @@ h2 {
     font-weight: 500;
     font-size: 1.5rem;
     border-bottom: 3px solid #ffbb00;
+    /* Yellow underline matching theme */
     display: inline-block;
     padding-bottom: 8px;
 }
 
-/* --- GRID SYSTEM (Matches Deployment Form) --- */
+/* GRID SYSTEM */
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    /* Two equal columns */
+    /* 2 Columns */
     column-gap: 40px;
-    /* Space between columns */
-    row-gap: 10px;
-    /* Space between rows */
-    width: 100%;
+    row-gap: 15px;
+    margin-bottom: 30px;
 }
 
-/* Helper for full-width rows (Action & Button) */
 .full-width {
     grid-column: 1 / -1;
 }
 
-/* Form Group (Stacked Label/Input) */
 .form-group {
     display: flex;
     flex-direction: column;
-    margin-bottom: 15px;
-    width: 100%;
+    margin-bottom: 5px;
 }
 
-/* Labels */
+/* LABELS & INPUTS */
 .col-label {
     text-align: left;
     margin-bottom: 8px;
@@ -53,7 +48,6 @@ h2 {
     font-size: 0.9rem;
 }
 
-/* Inputs */
 .col-input {
     width: 100%;
 }
@@ -68,7 +62,7 @@ input[type="text"] {
     font-size: 1rem;
     box-sizing: border-box;
     font-family: inherit;
-    /* Inherit font from container */
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 select:focus,
@@ -78,10 +72,126 @@ input:focus {
     box-shadow: 0 0 0 3px rgba(0, 90, 156, 0.1);
 }
 
-/* Validation */
+/* PILL SELECTORS (Action) */
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 5px 0;
+}
+
+.pill-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.pill-wrapper input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.pill-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 24px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.pill-label:hover {
+    background-color: #f8f9fa;
+    border-color: #bbb;
+    transform: translateY(-1px);
+}
+
+.pill-wrapper input:checked+.pill-label {
+    background-color: #005a9c;
+    color: white;
+    border-color: #005a9c;
+    box-shadow: 0 4px 10px rgba(0, 90, 156, 0.3);
+}
+
+/* DATE/TIME INPUT ROW */
+.flex-input {
+    display: flex;
+    width: 100%;
+}
+
+.flex-input input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: none;
+    flex-grow: 1;
+}
+
+/* Flatpickr container fix */
+.flex-input flatpickr-input-container {
+    width: 100%;
+}
+
+.icon-btn {
+    border: 1px solid #ccc;
+    border-left: none;
+    background-color: #f8f9fa;
+    padding: 0 15px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+    transition: background 0.2s;
+}
+
+.icon-btn:hover {
+    background-color: #e2e6ea;
+    color: #005a9c;
+}
+
+/* SUBMIT BUTTON */
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.deploy-btn {
+    min-width: 180px;
+    background-color: #005a9c;
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background 0.2s;
+}
+
+.deploy-btn:hover {
+    background-color: #004275;
+}
+
+/* ERROR STATES */
 .required {
     color: #dc3545;
-    margin-left: 2px;
 }
 
 .input-error {
@@ -89,6 +199,7 @@ input:focus {
     background-color: #fff8f8;
 }
 
+/* Error Message Text */
 .error-msg {
     color: #dc3545;
     font-size: 0.8rem;
@@ -115,86 +226,7 @@ input:focus {
     font-weight: bold;
 }
 
-/* PILLS */
-.radio-group {
-    display: flex;
-    gap: 12px;
-    padding: 5px 0;
-}
-
-.pill-wrapper {
-    position: relative;
-    display: inline-block;
-}
-
-.pill-wrapper input {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.pill-label {
-    padding: 10px 24px;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: 500;
-    color: #555;
-    user-select: none;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.pill-label:hover {
-    background-color: #f8f9fa;
-    transform: translateY(-1px);
-}
-
-.pill-wrapper input:checked+.pill-label {
-    background-color: #005a9c;
-    color: white;
-    border-color: #005a9c;
-    box-shadow: 0 4px 10px rgba(0, 90, 156, 0.3);
-}
-
-/* SUBMIT BUTTON */
-.form-actions {
-    margin-top: 20px;
-    display: flex;
-    justify-content: flex-end;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
-}
-
-.deploy-btn {
-    min-width: 180px;
-    background-color: #005a9c;
-    color: white;
-    border: none;
-    padding: 14px 24px;
-    font-size: 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    font-family: inherit;
-    /* Inherit font */
-}
-
-.deploy-btn:hover {
-    background-color: #004275;
-}
-
-/* ... (Existing Form Styles) ... */
-
-/* TOAST NOTIFICATION STYLES */
+/* TOAST NOTIFICATION */
 .toast-notification {
     position: fixed;
     top: 70px;
@@ -213,6 +245,7 @@ input:focus {
     pointer-events: none;
     transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     max-width: 400px;
+    width: auto;
 }
 
 .toast-notification.show {
@@ -229,8 +262,14 @@ input:focus {
     flex-shrink: 0;
     margin-top: 2px;
     display: flex;
+}
+
+.toast-notification:not(.error) .toast-icon {
+    color: #28a745;
+}
+
+.toast-notification.error .toast-icon {
     color: #dc3545;
-    /* Error Red */
 }
 
 .toast-message {
@@ -251,6 +290,8 @@ input:focus {
     right: 10px;
     top: 10px;
     display: flex;
+    align-items: center;
+    justify-content: center;
     transition: color 0.2s;
 }
 
@@ -258,10 +299,11 @@ input:focus {
     color: #333;
 }
 
-/* Mobile Response */
+/* RESPONSIVE */
 @media (max-width: 900px) {
     .form-grid {
         grid-template-columns: 1fr;
+        gap: 15px;
     }
 
     .deploy-btn {

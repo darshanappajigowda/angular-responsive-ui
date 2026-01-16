@@ -1,23 +1,18 @@
 <div class="form-container">
-
     <h2>Application Info</h2>
-
     <form class="info-form form-grid">
-
         <div class="form-group full-width">
             <label class="col-label">Action</label>
             <div class="radio-group">
-
                 <div class="pill-wrapper">
-                    <input type="radio" id="act-env" name="action" value="envInfo" [(ngModel)]="selectedAction">
-                    <label for="act-env" class="pill-label">Environment Info</label>
+                    <input type="radio" id="info-env" name="infoAction" value="envInfo" [(ngModel)]="selectedAction">
+                    <label for="info-env" class="pill-label">Environment Info</label>
                 </div>
-
                 <div class="pill-wrapper">
-                    <input type="radio" id="act-hist" name="action" value="requestHistory" [(ngModel)]="selectedAction">
-                    <label for="act-hist" class="pill-label">Request History</label>
+                    <input type="radio" id="info-hist" name="infoAction" value="requestHistory"
+                        [(ngModel)]="selectedAction">
+                    <label for="info-hist" class="pill-label">Request History</label>
                 </div>
-
             </div>
         </div>
 
@@ -30,7 +25,6 @@
                     <option value="UAT">UAT</option>
                     <option value="PROD">PROD</option>
                 </select>
-
                 @if (isSubmitted && !selectedEnv) {
                 <div class="error-msg">Environment is required</div>
                 }
@@ -45,7 +39,6 @@
                     <option value="ivr.war">ivr.war</option>
                     <option value="claims.ear">claims.ear</option>
                 </select>
-
                 @if (isSubmitted && !selectedApp) {
                 <div class="error-msg">Application is required</div>
                 }
@@ -55,18 +48,32 @@
         <div class="form-actions full-width">
             <button type="button" class="deploy-btn" (click)="onSubmit()">
                 Submit
-                <svg class="btn-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2"
-                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
                     <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
             </button>
         </div>
-
     </form>
 
     @if (showTable) {
-    <app-shared-table [data]="tableData" [columns]="tableCols">
-    </app-shared-table>
+    <app-shared-table [data]="tableData" [columns]="tableCols"></app-shared-table>
     }
 
+    <div class="toast-notification" [class.show]="toastVisible" [class.error]="toastType === 'error'">
+        <div class="toast-icon">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="3" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12" y2="17"></line>
+            </svg>
+        </div>
+        <span class="toast-message">{{ toastMessage }}</span>
+        <button class="toast-close" (click)="closeToast()">
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    </div>
 </div>

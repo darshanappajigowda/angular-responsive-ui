@@ -132,9 +132,9 @@
             <label class="col-label">Time (optional)</label>
             <div class="col-input">
                 <div class="flex-input">
-                    <input type="text" mwlFlatpickr [(ngModel)]="deploymentTime" [enableTime]="true"
-                        dateFormat="Y-m-d H:i" altFormat="d/m/Y H:i" [altInput]="true" placeholder="Select date..."
-                        class="date-picker-input">
+                    <input type="text" mwlFlatpickr name="deploymentTime" [(ngModel)]="deploymentTime"
+                        [enableTime]="true" dateFormat="Y-m-d H:i" altFormat="d/m/Y H:i" [altInput]="true"
+                        placeholder="Select date..." class="date-picker-input">
                     <button type="button" class="icon-btn" (click)="setToNow()" title="Set to Current Time">
                         <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

@@ -1,0 +1,157 @@
+/* Container & Headers */
+.form-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 10px auto 40px auto;
+    padding: 0 20px;
+}
+
+h2 {
+    text-align: left;
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-size: 1.5rem;
+    border-bottom: 3px solid #ffbb00;
+    /* Yellow underline from screenshot/theme */
+    display: inline-block;
+    padding-bottom: 8px;
+}
+
+/* Grid System */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
+    row-gap: 15px;
+    margin-bottom: 30px;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+/* Labels & Inputs */
+.col-label {
+    text-align: left;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+    font-size: 0.9rem;
+}
+
+select,
+input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: #fff;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+select:focus,
+input:focus {
+    outline: none;
+    border-color: #005a9c;
+    box-shadow: 0 0 0 3px rgba(0, 90, 156, 0.1);
+}
+
+/* Pill Selectors (Radio Group) */
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 5px 0;
+}
+
+.pill-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.pill-wrapper input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.pill-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 24px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    color: #555;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.pill-label:hover {
+    background-color: #f8f9fa;
+    border-color: #bbb;
+}
+
+.pill-wrapper input[type="radio"]:checked+.pill-label {
+    background-color: #005a9c;
+    color: white;
+    border-color: #005a9c;
+    box-shadow: 0 4px 10px rgba(0, 90, 156, 0.3);
+}
+
+/* Action Buttons */
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    /* Align right like screenshot */
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.deploy-btn {
+    min-width: 180px;
+    background-color: #005a9c;
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.deploy-btn:hover {
+    background-color: #004275;
+}
+
+/* Mobile Responsive */
+@media (max-width: 900px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .deploy-btn {
+        width: 100%;
+    }
+}

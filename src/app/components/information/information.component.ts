@@ -23,7 +23,12 @@ export class InformationComponent {
 
   tableData: any[] = [];
 
-  // Added 5 new columns as requested
+  // --- TOAST STATE ---
+  toastVisible: boolean = false;
+  toastMessage: string = '';
+  toastType: 'success' | 'error' = 'success';
+  toastTimeout: any;
+
   tableCols: TableColumn[] = [
     { field: 'requestId', header: 'Request ID', type: 'text' },
     { field: 'timestamp', header: 'Timestamp', type: 'text' },
@@ -33,7 +38,6 @@ export class InformationComponent {
     { field: 'action', header: 'Action', type: 'text' },
     { field: 'domain', header: 'Domain', type: 'text' },
     { field: 'userId', header: 'User ID', type: 'text' },
-    // New Columns
     { field: 'duration', header: 'Duration', type: 'text' },
     { field: 'clientIp', header: 'Client IP', type: 'text' },
     { field: 'node', header: 'Node', type: 'text' },
@@ -48,6 +52,47 @@ export class InformationComponent {
       this.loadMockData();
     } else {
       this.showTable = false;
+      // Trigger Validation Error Toast (autoClose: true)
+      this.showToast('Please fill in all required fields.', 'error', true);
+    }
+  }
+
+  // --- TOAST LOGIC ---
+  showToast(
+    message: string,
+    type: 'success' | 'error',
+    autoClose: boolean = false
+  ) {
+    if (this.toastTimeout) {
+      clearTimeout(this.toastTimeout);
+      this.toastTimeout = null;
+    }
+
+    const display = () => {
+      this.toastMessage = message;
+      this.toastType = type;
+      this.toastVisible = true;
+
+      if (autoClose) {
+        this.toastTimeout = setTimeout(() => {
+          this.closeToast();
+        }, 3000); // 3 seconds delay
+      }
+    };
+
+    if (this.toastVisible) {
+      this.toastVisible = false;
+      setTimeout(() => display(), 350);
+    } else {
+      display();
+    }
+  }
+
+  closeToast() {
+    this.toastVisible = false;
+    if (this.toastTimeout) {
+      clearTimeout(this.toastTimeout);
+      this.toastTimeout = null;
     }
   }
 

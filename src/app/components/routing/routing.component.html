@@ -1,0 +1,120 @@
+<div class="form-container">
+    <h2>Application Routing</h2>
+
+    <form class="form-grid">
+        <div class="form-group full-width">
+            <label class="col-label">Action</label>
+            <div class="radio-group">
+                <div class="pill-wrapper">
+                    <input type="radio" id="rt-switch" name="action" value="Switch" [(ngModel)]="action">
+                    <label for="rt-switch" class="pill-label">Switch</label>
+                </div>
+                <div class="pill-wrapper">
+                    <input type="radio" id="rt-connect" name="action" value="Connect" [(ngModel)]="action">
+                    <label for="rt-connect" class="pill-label">Connect</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-label">Environment <span class="required">*</span></label>
+            <div class="col-input">
+                <select [(ngModel)]="environment" name="environment" [class.input-error]="isSubmitted && !environment">
+                    <option value="">Select environment</option>
+                    <option value="SYST">SYST</option>
+                    <option value="UAT">UAT</option>
+                    <option value="PROD">PROD</option>
+                </select>
+                @if (isSubmitted && !environment) { <div class="error-msg">Environment is required</div> }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-label">Switching Target <span class="required">*</span></label>
+            <div class="col-input">
+                <select [(ngModel)]="switchingTarget" name="switchingTarget"
+                    [class.input-error]="isSubmitted && !switchingTarget">
+                    <option value="">Select switching target</option>
+                    <option value="TargetA">Target A</option>
+                    <option value="TargetB">Target B</option>
+                </select>
+                @if (isSubmitted && !switchingTarget) { <div class="error-msg">Switching Target is required</div> }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-label">Domain <span class="required">*</span></label>
+            <div class="col-input">
+                <select [(ngModel)]="domain" name="domain" [class.input-error]="isSubmitted && !domain">
+                    <option value="">Select domain</option>
+                    <option value="S1FD11">S1FD11</option>
+                    <option value="S1FD12">S1FD12</option>
+                </select>
+                @if (isSubmitted && !domain) { <div class="error-msg">Domain is required</div> }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-label">Peer Domain <span class="required">*</span></label>
+            <div class="col-input">
+                <select [(ngModel)]="peerDomain" name="peerDomain" [class.input-error]="isSubmitted && !peerDomain">
+                    <option value="">Select peer domain</option>
+                    <option value="S1FD21">S1FD21</option>
+                    <option value="S1FD22">S1FD22</option>
+                </select>
+                @if (isSubmitted && !peerDomain) { <div class="error-msg">Peer Domain is required</div> }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-label">Time (optional)</label>
+            <div class="col-input">
+                <div class="flex-input">
+                    <input type="text" mwlFlatpickr name="routingTime" [(ngModel)]="routingTime" [enableTime]="true"
+                        dateFormat="Y-m-d H:i" altFormat="d/m/Y H:i" [altInput]="true" placeholder="dd/mm/yyyy --:--"
+                        class="date-picker-input">
+                    <button type="button" class="icon-btn" (click)="setToNow()">
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none"
+                            stroke-width="2">
+                            <path d="M23 4v6h-6"></path>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions full-width">
+            <button type="button" class="deploy-btn" (click)="onSubmit()">
+                Submit
+                <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+    </form>
+
+    <div class="toast-notification" [class.show]="toastVisible" [class.error]="toastType === 'error'">
+        <div class="toast-icon">
+            @if (toastType === 'success') {
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            } @else {
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="3" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12" y2="16"></line>
+            </svg>
+            }
+        </div>
+        <span class="toast-message">{{ toastMessage }}</span>
+        <button class="toast-close" (click)="closeToast()">
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+</div>

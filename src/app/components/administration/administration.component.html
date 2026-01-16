@@ -1,0 +1,137 @@
+<div class="form-container">
+
+    <h2>Application Administration</h2>
+
+    <form class="form-grid">
+
+        <div class="form-group full-width">
+            <label class="col-label">Action</label>
+            <div class="radio-group">
+                <div class="pill-wrapper">
+                    <input type="radio" id="act-stop" name="action" value="Stop" [(ngModel)]="action">
+                    <label for="act-stop" class="pill-label">Stop</label>
+                </div>
+                <div class="pill-wrapper">
+                    <input type="radio" id="act-stop-imm" name="action" value="Stop Immediately" [(ngModel)]="action">
+                    <label for="act-stop-imm" class="pill-label">Stop Immediately</label>
+                </div>
+                <div class="pill-wrapper">
+                    <input type="radio" id="act-start" name="action" value="Start" [(ngModel)]="action">
+                    <label for="act-start" class="pill-label">Start</label>
+                </div>
+                <div class="pill-wrapper">
+                    <input type="radio" id="act-restart" name="action" value="Restart" [(ngModel)]="action">
+                    <label for="act-restart" class="pill-label">Restart</label>
+                </div>
+                <div class="pill-wrapper">
+                    <input type="radio" id="act-uninstall" name="action" value="Uninstall" [(ngModel)]="action">
+                    <label for="act-uninstall" class="pill-label">Uninstall</label>
+                </div>
+                <div class="pill-wrapper">
+                    <input type="radio" id="act-remove" name="action" value="Remove" [(ngModel)]="action">
+                    <label for="act-remove" class="pill-label">Remove</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-label">Environment <span class="required">*</span></label>
+            <div class="col-input">
+                <select [(ngModel)]="environment" name="environment" [class.input-error]="isSubmitted && !environment">
+                    <option value="">Select environment</option>
+                    <option value="SYST">SYST</option>
+                    <option value="UAT">UAT</option>
+                    <option value="PROD">PROD</option>
+                </select>
+                @if (isSubmitted && !environment) {
+                <div class="error-msg">Environment is required</div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-label">Domain <span class="required">*</span></label>
+            <div class="col-input">
+                <select [(ngModel)]="domain" name="domain" [class.input-error]="isSubmitted && !domain">
+                    <option value="">Select domain</option>
+                    <option value="S1FD11">S1FD11</option>
+                    <option value="S1FD12">S1FD12</option>
+                </select>
+                @if (isSubmitted && !domain) {
+                <div class="error-msg">Domain is required</div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-label">Admin Target <span class="required">*</span></label>
+            <div class="col-input">
+                <select [(ngModel)]="adminTarget" name="adminTarget" [class.input-error]="isSubmitted && !adminTarget">
+                    <option value="">Select admin target</option>
+                    <option value="Target1">Target1</option>
+                    <option value="Target2">Target2</option>
+                </select>
+                @if (isSubmitted && !adminTarget) {
+                <div class="error-msg">Admin Target is required</div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-label">Time (optional)</label>
+            <div class="col-input">
+                <div class="flex-input">
+                    <input type="text" mwlFlatpickr name="adminTime" [(ngModel)]="adminTime" [enableTime]="true"
+                        dateFormat="Y-m-d H:i" altFormat="d/m/Y H:i" [altInput]="true" placeholder="dd/mm/yyyy --:--"
+                        class="date-picker-input">
+                    <button type="button" class="icon-btn" (click)="setToNow()" title="Set to Current Time">
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 4v6h-6"></path>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions full-width">
+            <button type="button" class="deploy-btn" (click)="onSubmit()">
+                Submit
+                <svg class="btn-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2"
+                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+
+    </form>
+
+
+    <div class="toast-notification" [class.show]="toastVisible" [class.error]="toastType === 'error'">
+        <div class="toast-icon">
+            @if (toastType === 'success') {
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            } @else {
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            }
+        </div>
+        <span class="toast-message">{{ toastMessage }}</span>
+        <button class="toast-close" (click)="closeToast()">
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+
+</div>
