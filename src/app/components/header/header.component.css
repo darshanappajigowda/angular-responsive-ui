@@ -1,0 +1,232 @@
+/* --- LAYOUT GRID --- */
+.top-header {
+    background-color: var(--primary-color);
+    color: white;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    /* Remove default padding, we handle it inside sections */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1000;
+}
+
+/* 1. LEFT SECTION (Logo) */
+.header-left {
+    width: 260px;
+    /* MATCHES SIDEBAR WIDTH EXACTLY */
+    min-width: 260px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    /* Optional: visual separator */
+    height: 100%;
+}
+
+.burger-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 15px;
+    display: none;
+    /* Hidden on Desktop */
+    padding: 0;
+    color: white;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 1.35rem;
+}
+
+.logo-icon {
+    width: 32px;
+    /* Increased from 28px */
+    height: 32px;
+}
+
+/* 2. CENTER SECTION (Title) */
+.header-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font-size: 1.6rem;
+    /* Increased from 1.25rem */
+    margin: 0;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* 3. RIGHT SECTION (Dev Tools) */
+.header-right {
+    padding-right: 20px;
+    position: relative;
+    /* Anchor for the dropdown */
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.tools-icon-prefix {
+    margin-right: 2px;
+    /* Small gap between icon and text */
+}
+
+.tools-toggle {
+    background: none;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* Spacing between all items */
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: background 0.2s;
+    height: 100%;
+}
+
+.tools-toggle:hover,
+.tools-toggle.active {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.chevron {
+    transition: transform 0.2s;
+}
+
+.chevron.rotate {
+    transform: rotate(180deg);
+}
+
+/* --- DROPDOWN MENU --- */
+.tools-menu {
+    position: absolute;
+    top: 100%;
+    /* Just below the header */
+    right: 10px;
+    width: 200px;
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 10px 0;
+    border: 1px solid #eee;
+    animation: fadeIn 0.2s ease;
+}
+
+.menu-heading {
+    margin: 0;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    color: #888;
+    border-bottom: 1px solid #eee;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: none;
+    /* Hidden on large screens, shown on mobile */
+}
+
+.tools-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tools-list li a {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.1s;
+}
+
+.tools-list li a:hover {
+    background-color: #f5f7fa;
+    color: var(--primary-color);
+}
+
+.tool-icon {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin-right: 10px;
+}
+
+/* Example Colors for icons */
+.gitlab {
+    background-color: #fc6d26;
+}
+
+.jenkins {
+    background-color: #d33833;
+}
+
+.splunk {
+    background-color: #000000;
+}
+
+.sonarqube {
+    background-color: #4e9bcd;
+}
+
+.fortify {
+    background-color: #004d9b;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (max-width: 1024px) {
+    .header-left {
+        width: auto;
+        /* Allow shrinking on tablet */
+        min-width: 0;
+    }
+
+    .burger-btn {
+        display: block;
+        /* Show burger */
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Hide the TEXT "Dev Tools" on small screens, keep chevron */
+    .tools-text {
+        display: none;
+    }
+
+    /* Show the Heading inside the dropdown instead */
+    .menu-heading {
+        display: block;
+    }
+
+    h1 {
+        font-size: 1.1rem;
+        /* Smaller title */
+    }
+}

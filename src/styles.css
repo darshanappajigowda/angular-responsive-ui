@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import 'flatpickr/dist/flatpickr.css';
+
+:root {
+    --primary-color: #005a9c;
+    --text-color: #333;
+    --bg-color: #f5f7fa;
+    --sidebar-bg: #ffffff;
+    --border-color: #e0e0e0;
+    --font-family: 'Ubuntu', sans-serif;
+    --nav-width: 260px;
+    /* Must match your Sidebar width */
+}
+
+* {
+    box-sizing: border-box;
+    font-family: var(--font-family);
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+/* --- LAYOUT ARCHITECTURE --- */
+
+/* 1. Main Container (Vertical Column) */
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* Ensures full height */
+}
+
+/* 2. Header (Static Block) */
+app-header {
+    width: 100%;
+    z-index: 10;
+    /* No fixed position, it sits naturally at the top */
+}
+
+/* 3. Lower Body (Horizontal Row) */
+.lower-body {
+    display: flex;
+    /* Aligns Sidebar and Content side-by-side */
+    flex: 1;
+    /* Takes up all remaining vertical space */
+}
+
+/* 4. Left Nav (Static Width) */
+app-left-nav {
+    width: var(--nav-width);
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    flex-shrink: 0;
+    /* Prevents sidebar from getting squashed */
+}
+
+/* 5. Main Content (Flexible Width) */
+.main-content {
+    flex: 1;
+    /* Takes all remaining width automatically */
+    padding: 30px;
+    /* Clean spacing for your forms */
+    background-color: var(--bg-color);
+    overflow-x: hidden;
+    /* Prevents horizontal scrollbars */
+}
+
+/* --- UTILITIES --- */
+input,
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    width: 100%;
+    background: white;
+}
+
+input:focus,
+select:focus {
+    outline: 2px solid var(--primary-color);
+    border-color: transparent;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* Center Utility for Login Screen if needed later */
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}

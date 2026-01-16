@@ -1,0 +1,236 @@
+<div class="form-container">
+
+    <h2>Application Deployment</h2>
+
+    <form class="form-grid">
+
+        <div class="form-group full-width">
+            <label class="col-label">Action</label>
+            <div class="radio-group">
+                <div class="pill-wrapper">
+                    <input type="radio" id="act-install" name="action" value="install" [(ngModel)]="action">
+                    <label for="act-install" class="pill-label">Install</label>
+                </div>
+                <div class="pill-wrapper">
+                    <input type="radio" id="act-uninstall" name="action" value="uninstall" [(ngModel)]="action">
+                    <label for="act-uninstall" class="pill-label">Uninstall</label>
+                </div>
+                <div class="pill-wrapper">
+                    <input type="radio" id="act-start" name="action" value="start" [(ngModel)]="action">
+                    <label for="act-start" class="pill-label">Start</label>
+                </div>
+                <div class="pill-wrapper">
+                    <input type="radio" id="act-restart" name="action" value="restart" [(ngModel)]="action">
+                    <label for="act-restart" class="pill-label">Restart</label>
+                </div>
+                <div class="pill-wrapper">
+                    <input type="radio" id="act-stop" name="action" value="stop" [(ngModel)]="action">
+                    <label for="act-stop" class="pill-label">Stop</label>
+                </div>
+                <div class="pill-wrapper">
+                    <input type="radio" id="act-delete" name="action" value="delete" [(ngModel)]="action">
+                    <label for="act-delete" class="pill-label">Delete</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-label">Deployment Source <span class="required">*</span></label>
+            <div class="col-input">
+                <select [(ngModel)]="deploymentSource" name="deploymentSource"
+                    [class.input-error]="isSubmitted && !deploymentSource">
+                    <option value="">Select deployment source</option>
+                    <option value="GitLab">GitLab</option>
+                    <option value="Jenkins">Jenkins</option>
+                </select>
+                @if (isSubmitted && !deploymentSource) {
+                <div class="error-msg">Deployment Source is required</div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-label">Build <span class="required">*</span></label>
+            <div class="col-input">
+                <select [(ngModel)]="build" name="build" [class.input-error]="isSubmitted && !build">
+                    <option value="">Select build</option>
+                    <option value="Build_1.0.1">Build_1.0.1</option>
+                    <option value="Build_1.0.2">Build_1.0.2</option>
+                </select>
+                @if (isSubmitted && !build) {
+                <div class="error-msg">Build is required</div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-label">Installed Version</label>
+            <div class="col-input">
+                <input type="text" value="No data available" readonly class="readonly-field">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-label">Environment <span class="required">*</span></label>
+            <div class="col-input">
+                <select [(ngModel)]="environment" name="environment" [class.input-error]="isSubmitted && !environment">
+                    <option value="">Select environment</option>
+                    <option value="SYST">SYST</option>
+                    <option value="UAT">UAT</option>
+                </select>
+                @if (isSubmitted && !environment) {
+                <div class="error-msg">Environment is required</div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-label">Domain <span class="required">*</span></label>
+            <div class="col-input has-badge">
+                <select [(ngModel)]="domainValue" name="domain" [class.input-error]="isSubmitted && !domainValue">
+                    <option value="">Select domain</option>
+                    <option value="S1FD11">S1FD11</option>
+                    <option value="S1FD12">S1FD12</option>
+                    <option value="SYST">SYST</option>
+                </select>
+                @if (domainValue === 'S1FD11') { <div class="domain-badge external">External JBoss7 Domain</div> }
+                @if (domainValue === 'S1FD12') { <div class="domain-badge internal">Internal JBoss7 Domain</div> }
+                @if (isSubmitted && !domainValue) { <div class="error-msg">Domain is required</div> }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-label">Deployment Target <span class="required">*</span></label>
+            <div class="col-input">
+                <input type="text" [(ngModel)]="deploymentTarget" name="deploymentTarget" placeholder="Enter target..."
+                    [class.input-error]="isSubmitted && !deploymentTarget">
+                @if (isSubmitted && !deploymentTarget) {
+                <div class="error-msg">Deployment Target is required</div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-label">Fortify Status</label>
+            <div class="col-input status-wrapper">
+                <input type="text" [value]="fortifyStatus" readonly class="readonly-field"
+                    [class.input-valid]="fortifyStatus === 'Valid'" [class.input-invalid]="fortifyStatus === 'Invalid'"
+                    [class.input-warning]="fortifyStatus.startsWith('Error')">
+
+                @if (fortifyStatus === 'Valid') {
+                <div class="status-icon valid-icon">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="3" fill="none"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-label">Time (optional)</label>
+            <div class="col-input">
+                <div class="flex-input">
+                    <input type="text" mwlFlatpickr [(ngModel)]="deploymentTime" [enableTime]="true"
+                        dateFormat="Y-m-d H:i" altFormat="d/m/Y H:i" [altInput]="true" placeholder="Select date..."
+                        class="date-picker-input">
+                    <button type="button" class="icon-btn" (click)="setToNow()" title="Set to Current Time">
+                        <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M23 4v6h-6"></path>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions full-width">
+            <button type="button" class="deploy-btn" (click)="deploy()">
+                Deploy
+                <svg class="btn-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2"
+                    fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+
+    </form>
+
+
+    @if (showConfirmation) {
+    <div class="modal-overlay">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h3>Confirm Deployment</h3>
+            </div>
+
+            <div class="modal-body">
+                <p class="modal-intro">Are you sure you want to proceed with this deployment?</p>
+
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <span class="label">Action:</span>
+                        <span class="value" style="text-transform: capitalize;">{{ action }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Source:</span>
+                        <span class="value">{{ deploymentSource }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Build:</span>
+                        <span class="value">{{ build }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Environment:</span>
+                        <span class="value">{{ environment }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Domain:</span>
+                        <span class="value">{{ domainValue }}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="label">Target:</span>
+                        <span class="value">{{ deploymentTarget }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-secondary" (click)="cancelDeployment()">Cancel</button>
+                <button class="btn-primary" (click)="confirmDeployment()">Confirm</button>
+            </div>
+
+        </div>
+    </div>
+    }
+
+    <div class="toast-notification" [class.show]="toastVisible" [class.error]="toastType === 'error'">
+        <div class="toast-icon">
+            @if (toastType === 'success') {
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+            } @else {
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            }
+        </div>
+        <span class="toast-message">{{ toastMessage }}</span>
+        <button class="toast-close" (click)="closeToast()">
+            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"
+                stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </button>
+    </div>
+
+</div>

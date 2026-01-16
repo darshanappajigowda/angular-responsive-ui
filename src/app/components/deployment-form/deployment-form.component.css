@@ -1,0 +1,655 @@
+/* 1. Main Container - Tightened Spacing */
+.form-container {
+    width: 100%;
+    max-width: 1100px;
+    /* Reduced top margin from 40px to 10px to pull it up to the header */
+    margin: 10px auto 40px auto;
+    padding: 0 20px;
+}
+
+/* 2. Remove the "Card" look (No Border, No Shadow) */
+.form-card {
+    background-color: transparent;
+    /* or #fff if your page bg is grey */
+    padding: 10px 0;
+    /* Reduced padding since we don't have a border anymore */
+    border-radius: 0;
+    box-shadow: none;
+    /* REMOVED shadow */
+    border: none;
+    /* REMOVED border ("corder") */
+}
+
+/* 3. Heading - Tighter spacing */
+h2 {
+    text-align: left;
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 20px;
+    /* Reduced from 30px */
+    font-weight: 500;
+    font-size: 1.5rem;
+
+    /* Keep the underline if you like it, or remove these 3 lines for a cleaner look */
+    /* border-bottom: 2px solid #ffbb00;
+    display: inline-block;
+    padding-bottom: 8px; */
+}
+
+/* 3. GRID SYSTEM */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Two equal columns */
+    column-gap: 40px;
+    /* Space between the two columns */
+    row-gap: 10px;
+    /* Space between rows */
+}
+
+/* Helper to make elements span both columns */
+.full-width {
+    grid-column: 1 / -1;
+    /* Spans from start to end */
+}
+
+/* 4. Form Group */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+/* 5. Labels */
+.col-label {
+    text-align: left;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+    font-size: 0.9rem;
+}
+
+/* 6. Inputs - Shared Styles */
+input[type="text"],
+select,
+.readonly-field,
+.date-picker-input {
+    width: 100%;
+    padding: 12px 15px;
+    /* More breathing room */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: #fff;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #005a9c;
+    box-shadow: 0 0 0 3px rgba(0, 90, 156, 0.1);
+}
+
+/* 7. Read-only specific style */
+.readonly-field {
+    background-color: #f8f9fa;
+    color: #666;
+    cursor: default;
+    border-color: #ddd;
+}
+
+/* --- MODERN PILL SELECTOR --- */
+/* Container for the pills */
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 5px 0;
+}
+
+/* Wrapper just holds them together */
+.pill-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+/* 1. HIDE the actual input completely */
+.pill-wrapper input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+}
+
+/* 2. Style the LABEL (which acts as the button) */
+.pill-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 24px;
+    /* Nice click area */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    color: #555;
+    font-weight: 500;
+    cursor: pointer;
+    /* Shows hand cursor */
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    user-select: none;
+}
+
+/* Hover Effect */
+.pill-label:hover {
+    background-color: #f8f9fa;
+    border-color: #bbb;
+    transform: translateY(-1px);
+}
+
+/* 3. SELECTED STATE */
+/* When input with ID 'x' is checked, style the label immediately after it */
+.pill-wrapper input[type="radio"]:checked+.pill-label {
+    background-color: #005a9c;
+    /* Primary Blue */
+    color: white;
+    border-color: #005a9c;
+    box-shadow: 0 4px 10px rgba(0, 90, 156, 0.3);
+}
+
+/* 9. Date/Time Row */
+.flex-input {
+    display: flex;
+    width: 100%;
+    gap: 0;
+}
+
+.flex-input input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: none;
+    flex-grow: 1;
+}
+
+/* Fix for Flatpickr wrapper */
+.flex-input flatpickr-input-container {
+    width: 100%;
+}
+
+.icon-btn {
+    border: 1px solid #ccc;
+    border-left: none;
+    background-color: #f8f9fa;
+    padding: 0 15px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #555;
+    transition: background 0.2s;
+}
+
+.icon-btn:hover {
+    background-color: #e2e6ea;
+    color: #005a9c;
+}
+
+/* 10. Submit Button Area */
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    /* Align button to the RIGHT */
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.deploy-btn {
+    width: auto;
+    min-width: 180px;
+    /* Clean size */
+    background-color: #005a9c;
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.deploy-btn:hover {
+    background-color: #004275;
+    box-shadow: 0 4px 12px rgba(0, 90, 156, 0.2);
+}
+
+.deploy-btn:active {
+    transform: translateY(1px);
+}
+
+.status-wrapper {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+/* --- FORTIFY & DOMAIN BADGES (Keep existing logic) --- */
+.status-wrapper input {
+    padding-right: 40px;
+    transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease;
+}
+
+/* 2. Status Icon Positioning */
+.status-icon {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    /* We set the final state here for reference */
+    transform: translateY(-50%);
+    display: flex;
+    pointer-events: none;
+    z-index: 2;
+
+    /* Apply the animation when the icon enters the DOM */
+    animation: iconFadeIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.valid-icon {
+    color: #28a745;
+}
+
+.invalid-icon {
+    color: #dc3545;
+}
+
+.warning-icon {
+    color: #f59f00;
+}
+
+.input-valid {
+    border-color: #28a745 !important;
+    background-color: #f0fff4 !important;
+    color: #155724 !important;
+}
+
+.input-invalid {
+    border-color: #dc3545 !important;
+    background-color: #fff5f5 !important;
+    color: #721c24 !important;
+}
+
+.input-warning {
+    border-color: #f59f00 !important;
+    background-color: #fff9db !important;
+    color: #d97706 !important;
+}
+
+/* Domain badges */
+.col-input.has-badge {
+    display: flex;
+    flex-direction: column;
+}
+
+.domain-badge {
+    align-self: flex-end;
+    margin-top: 6px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+    animation: fadeInUp 0.4s ease-out forwards;
+}
+
+.external,
+.internal {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border: 1px solid #badbcc;
+}
+
+/* --- VALIDATION STYLES --- */
+
+/* 1. Red Border for Invalid Inputs */
+.input-error {
+    border-color: #dc3545 !important;
+    /* Standard Bootstrap Danger Red */
+    background-color: #fff8f8;
+    /* Very light red tint */
+}
+
+/* Ensure the red border overrides the focus blue border */
+.input-error:focus {
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25) !important;
+}
+
+/* 2. Error Message Text */
+.error-msg {
+    color: #dc3545;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Optional: Add a tiny icon before the error text */
+.error-msg::before {
+    content: "!";
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 14px;
+    height: 14px;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+/* Add this to your existing CSS file */
+.required {
+    color: #dc3545;
+    /* Matches the error message red */
+    margin-left: 2px;
+}
+
+/* ... [KEEP ALL YOUR EXISTING CSS] ... */
+/* ... form-container, grid, pills, inputs, etc. ... */
+
+/* ========================================= */
+/* MODAL STYLES                    */
+/* ========================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+    animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    animation: scaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    font-family: inherit;
+    /* Ensure Ubuntu */
+}
+
+.modal-header {
+    background-color: #f8f9fa;
+    padding: 15px 25px;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+    margin: 0;
+    color: #005a9c;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.modal-body {
+    padding: 25px;
+}
+
+.modal-intro {
+    margin-top: 0;
+    color: #555;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+/* Summary Box inside Modal */
+.summary-grid {
+    background-color: #f9fbfd;
+    border: 1px solid #e3effa;
+    border-radius: 6px;
+    padding: 15px;
+    display: grid;
+    gap: 10px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed #e0e0e0;
+    padding-bottom: 8px;
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.summary-item .label {
+    font-weight: 600;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.summary-item .value {
+    color: #333;
+    font-weight: 500;
+}
+
+/* Modal Actions */
+.modal-actions {
+    padding: 15px 25px;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+/* Secondary Button (Cancel) */
+.btn-secondary {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    color: #555;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: inherit;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    background-color: #f5f5f5;
+    border-color: #bbb;
+}
+
+/* Primary Button (Confirm) */
+.btn-primary {
+    background-color: #005a9c;
+    border: 1px solid #005a9c;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: inherit;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #004275;
+}
+
+/* ========================================= */
+/* TOAST STYLES                    */
+/* ========================================= */
+.toast-notification {
+    position: fixed;
+    /* Move it down so it doesn't cover the header */
+    top: 70px;
+    right: 20px;
+    background-color: #ffffff;
+    border-left: 5px solid #28a745;
+    padding: 16px 45px 16px 20px;
+    border-radius: 4px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    display: flex;
+    /* Align items to the top for multi-line messages */
+    align-items: flex-start;
+    gap: 12px;
+    z-index: 2000;
+    opacity: 0;
+    transform: translateX(20px);
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    font-family: inherit;
+
+    /* --- KEY FIX: Restrict width --- */
+    max-width: 400px;
+    width: auto;
+}
+
+.toast-notification.show {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+.toast-notification.error {
+    border-left-color: #dc3545;
+}
+
+.toast-icon {
+    /* Prevent icon from shrinking */
+    flex-shrink: 0;
+    /* Align icon vertically with the first line of text */
+    margin-top: 2px;
+    display: flex;
+}
+
+.toast-notification:not(.error) .toast-icon {
+    color: #28a745;
+}
+
+.toast-notification.error .toast-icon {
+    color: #dc3545;
+}
+
+.toast-message {
+    font-size: 0.95rem;
+    color: #333;
+    font-weight: 500;
+    /* Allow text to wrap nicely */
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    color: #999;
+    position: absolute;
+    /* Position at top-right corner */
+    right: 10px;
+    top: 10px;
+    /* Remove vertical centering for multi-line text */
+    transform: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.toast-close:hover {
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+/* Animations */
+@keyframes scaleUp {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* --- RESPONSIVE BREAKPOINT --- */
+/* When screen is smaller (Tablet/Mobile), collapse back to 1 column */
+@media (max-width: 900px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+        /* Force single column */
+        gap: 0;
+    }
+
+    .form-actions {
+        justify-content: center;
+        /* Center button on mobile */
+    }
+
+    .deploy-btn {
+        width: 100%;
+        /* Full width button on mobile */
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+        /* Starts slightly above */
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        /* Lands in final position */
+    }
+}
+
+@keyframes iconFadeIn {
+    from {
+        opacity: 0;
+        /* Start slightly zoomed out and offset */
+        transform: translateY(-50%) scale(0.5);
+    }
+
+    to {
+        opacity: 1;
+        /* End perfectly centered and full scale */
+        transform: translateY(-50%) scale(1);
+    }
+}

@@ -1,0 +1,442 @@
+/* --- GLOBAL LAYOUT (Standard) --- */
+.form-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 10px auto 40px auto;
+    padding: 0 20px;
+}
+
+h2 {
+    text-align: left;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-size: 1.5rem;
+    border-bottom: 3px solid #ffbb00;
+    display: inline-block;
+    padding-bottom: 8px;
+}
+
+/* Form Grid */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
+    row-gap: 15px;
+    margin-bottom: 30px;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.col-label {
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+select,
+input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+/* Submit Button */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.deploy-btn {
+    background-color: #005a9c;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    gap: 8px;
+}
+
+/* --- TABLE STYLES --- */
+.results-section {
+    animation: fadeInUp 0.4s ease-out forwards;
+}
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+}
+
+.data-table th {
+    background-color: #e3effa;
+    color: #005a9c;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    padding: 16px 20px;
+    text-align: left;
+    border-bottom: 2px solid #d0e1f0;
+}
+
+.data-table td {
+    padding: 14px 20px;
+    border-bottom: 1px solid #f1f1f1;
+    color: #333;
+    vertical-align: middle;
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.complete {
+    background-color: #e6f6ee;
+    color: #0f5132;
+}
+
+.pending {
+    background-color: #fff8e1;
+    color: #b45309;
+}
+
+.failed {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+/* --- ACCORDION INTERACTION --- */
+.clickable-row {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.clickable-row:hover {
+    background-color: #f0f8ff;
+    /* AliceBlue Hover */
+}
+
+.expanded-row-active {
+    background-color: #e3effa !important;
+    /* Active state color */
+    border-left: 4px solid #005a9c;
+}
+
+/* Chevron Rotation */
+.chevron {
+    transition: transform 0.3s ease;
+    color: #999;
+}
+
+.rotated {
+    transform: rotate(180deg);
+    color: #005a9c;
+}
+
+/* Expanded Content Area */
+.detail-row td {
+    background-color: #fafafa;
+    /* Slightly grey background for details */
+    padding: 0;
+    border-bottom: 1px solid #eee;
+}
+
+.detail-content {
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: slideDown 0.3s ease-out;
+}
+
+.detail-info p {
+    margin: 5px 0 0;
+    color: #555;
+}
+
+/* Action Buttons */
+.detail-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.action-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.1s, opacity 0.2s;
+}
+
+.action-btn:active {
+    transform: translateY(1px);
+}
+
+/* Approve (Primary) */
+.approve {
+    background-color: #005a9c;
+    color: white;
+}
+
+.approve:hover {
+    background-color: #004275;
+}
+
+/* Reject (Secondary/Grey/Red) */
+.reject {
+    background-color: #6c757d;
+    /* Standard Secondary Grey */
+    color: white;
+}
+
+.reject:hover {
+    background-color: #5a6268;
+}
+
+.action-done {
+    font-style: italic;
+    color: #777;
+}
+
+/* ... Existing styles ... */
+
+/* Add Pagination Styles at the bottom */
+.pagination-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5px;
+    color: #666;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.page-info {
+    font-weight: 500;
+    color: #888;
+}
+
+.page-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.page-btn {
+    width: 36px;
+    height: 36px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #555;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.page-btn:hover:not(:disabled) {
+    background-color: #005a9c;
+    color: white;
+    border-color: #005a9c;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 90, 156, 0.2);
+}
+
+.page-btn:disabled {
+    background-color: #f9f9f9;
+    color: #ccc;
+    cursor: default;
+    border-color: #eee;
+    box-shadow: none;
+}
+
+/* Ensure detail content centers the buttons since description is gone */
+.detail-content {
+    padding: 20px 30px;
+    display: flex;
+    justify-content: flex-end;
+    /* Align buttons to the right (or center if you prefer) */
+    align-items: center;
+    animation: slideDown 0.3s ease-out;
+}
+
+/* --- CONTROLS (Search) --- */
+.table-controls {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+
+.search-wrapper {
+    position: relative;
+    width: 250px;
+}
+
+.search-wrapper input {
+    width: 100%;
+    padding: 10px 35px 10px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    /* Matches Shared Table */
+    background: #fff;
+    outline: none;
+    font-size: 0.9rem;
+    font-family: inherit;
+    /* Ensure Ubuntu */
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+.search-wrapper input:focus {
+    border-color: #005a9c;
+    box-shadow: 0 4px 10px rgba(0, 90, 156, 0.15);
+}
+
+.search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    pointer-events: none;
+}
+
+/* --- TOAST NOTIFICATION --- */
+.toast-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #ffffff;
+    border-left: 5px solid #28a745;
+
+    /* Increased right padding to make room for the close button */
+    padding: 16px 45px 16px 20px;
+
+    border-radius: 4px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 1000;
+
+    opacity: 0;
+    transform: translateX(20px);
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.toast-notification.show {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+.toast-notification.error {
+    border-left-color: #dc3545;
+}
+
+.toast-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toast-notification:not(.error) .toast-icon {
+    color: #28a745;
+}
+
+.toast-notification.error .toast-icon {
+    color: #dc3545;
+}
+
+.toast-message {
+    font-size: 0.95rem;
+    color: #333;
+    font-weight: 500;
+}
+
+/* --- NEW: CLOSE BUTTON STYLES --- */
+.toast-close {
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    color: #999;
+
+    /* Absolute position to keep it fixed to the right */
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.toast-close:hover {
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

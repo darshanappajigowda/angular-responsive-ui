@@ -1,0 +1,75 @@
+<div class="results-section">
+
+    <div class="table-controls">
+        <div class="search-wrapper">
+            <input type="text" placeholder="Search..." [(ngModel)]="searchText" (ngModelChange)="filterData()">
+
+            <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2"
+                fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    @for (col of columns; track col.field) {
+                    <th>{{ col.header }}</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @for (row of paginatedData; track row) {
+                <tr>
+                    @for (col of columns; track col.field) {
+                    <td>
+                        @if (!col.type || col.type === 'text' || col.type === 'date') {
+                        {{ row[col.field] }}
+                        }
+                        @if (col.type === 'status') {
+                        <span class="status-badge" [class.complete]="row[col.field] === 'complete'"
+                            [class.pending]="row[col.field] === 'pending'" [class.failed]="row[col.field] === 'failed'">
+                            {{ row[col.field] }}
+                        </span>
+                        }
+                    </td>
+                    }
+                </tr>
+                }
+                @if (paginatedData.length === 0) {
+                <tr>
+                    <td [attr.colspan]="columns.length" class="empty-cell">
+                        No matching records found.
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination-footer">
+        <span class="page-info">
+            {{ filteredData.length > 0 ? startIndex + 1 : 0 }} – {{ endIndex }} of {{ filteredData.length }}
+        </span>
+
+        <div class="page-controls">
+            <button class="page-btn" (click)="prevPage()" [disabled]="currentPage === 1">
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+
+            <button class="page-btn" (click)="nextPage()" [disabled]="currentPage >= totalPages">
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+</div>

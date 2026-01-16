@@ -1,0 +1,199 @@
+/* GLOBAL FONT & CONTAINER */
+.form-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 10px auto 40px auto;
+    padding: 0 20px;
+}
+
+/* Heading */
+h2 {
+    text-align: left;
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-size: 1.5rem;
+    border-bottom: 3px solid #ffbb00;
+    display: inline-block;
+    padding-bottom: 8px;
+}
+
+/* --- GRID SYSTEM (Matches Deployment Form) --- */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Two equal columns */
+    column-gap: 40px;
+    /* Space between columns */
+    row-gap: 10px;
+    /* Space between rows */
+    width: 100%;
+}
+
+/* Helper for full-width rows (Action & Button) */
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* Form Group (Stacked Label/Input) */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+/* Labels */
+.col-label {
+    text-align: left;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+    font-size: 0.9rem;
+}
+
+/* Inputs */
+.col-input {
+    width: 100%;
+}
+
+select,
+input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 1rem;
+    box-sizing: border-box;
+    font-family: inherit;
+    /* Inherit font from container */
+}
+
+select:focus,
+input:focus {
+    outline: none;
+    border-color: #005a9c;
+    box-shadow: 0 0 0 3px rgba(0, 90, 156, 0.1);
+}
+
+/* Validation */
+.required {
+    color: #dc3545;
+    margin-left: 2px;
+}
+
+.input-error {
+    border-color: #dc3545 !important;
+    background-color: #fff8f8;
+}
+
+.error-msg {
+    color: #dc3545;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    animation: fadeIn 0.3s ease;
+}
+
+/* PILLS */
+.radio-group {
+    display: flex;
+    gap: 12px;
+    padding: 5px 0;
+}
+
+.pill-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.pill-wrapper input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.pill-label {
+    padding: 10px 24px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #555;
+    user-select: none;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pill-label:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-1px);
+}
+
+.pill-wrapper input:checked+.pill-label {
+    background-color: #005a9c;
+    color: white;
+    border-color: #005a9c;
+    box-shadow: 0 4px 10px rgba(0, 90, 156, 0.3);
+}
+
+/* SUBMIT BUTTON */
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.deploy-btn {
+    min-width: 180px;
+    background-color: #005a9c;
+    color: white;
+    border: none;
+    padding: 14px 24px;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: inherit;
+    /* Inherit font */
+}
+
+.deploy-btn:hover {
+    background-color: #004275;
+}
+
+/* Mobile Response */
+@media (max-width: 900px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .deploy-btn {
+        width: 100%;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

@@ -1,0 +1,55 @@
+<div class="auth-container">
+
+    <div class="auth-card">
+
+        @if (status === 'loading') {
+        <div class="state-content">
+            <div class="spinner-large"></div>
+            <h2>Authenticating...</h2>
+            <p>Verifying roles for user <strong>{{ currentUserId }}</strong></p>
+        </div>
+        }
+
+        @if (status === 'unauthorized') {
+        <div class="state-content error-state">
+            <div class="icon-circle error-bg">
+                <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                </svg>
+            </div>
+            <h2>Access Denied</h2>
+            <p>User <strong>{{ currentUserId }}</strong> does not have the required roles to access this application.
+            </p>
+            <div class="help-text">
+                Please contact the Identity Management team if you believe this is an error.
+            </div>
+        </div>
+        }
+
+        @if (status === 'error') {
+        <div class="state-content error-state">
+            <div class="icon-circle warning-bg">
+                <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="2" fill="none"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z">
+                    </path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+            </div>
+            <h2>System Error</h2>
+            <p>Unable to contact the authentication service.</p>
+            <button class="retry-btn" (click)="retry()">Try Again</button>
+        </div>
+        }
+
+    </div>
+
+    <div class="auth-footer">
+        Auth Service v2.4 | System ID: S1FD
+    </div>
+
+</div>

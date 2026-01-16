@@ -1,0 +1,15 @@
+<div class="app-container">
+  <app-header (menuToggle)="toggleMenu()"></app-header>
+
+  <div class="main-layout">
+    <aside class="sidebar left-sidebar" [class.open]="isMobileMenuOpen">
+      <app-left-nav></app-left-nav>
+    </aside>
+
+    <main class="content-area" (click)="isMobileMenuOpen = false">
+      <router-outlet></router-outlet>
+    </main>
+
+
+  </div>
+</div>
