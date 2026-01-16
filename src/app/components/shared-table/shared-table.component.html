@@ -2,7 +2,7 @@
 
     <div class="table-controls">
         <div class="search-wrapper">
-            <input type="text" placeholder="Search..." [(ngModel)]="searchText" (ngModelChange)="filterData()">
+            <input type="text" placeholder="Search..." [formControl]="searchControl">
 
             <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2"
                 fill="none" stroke-linecap="round" stroke-linejoin="round">

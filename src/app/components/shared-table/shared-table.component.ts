@@ -1,6 +1,15 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormControl } from '@angular/forms'; // 1. Import ReactiveFormsModule
+import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 export interface TableColumn {
   field: string;
@@ -11,18 +20,18 @@ export interface TableColumn {
 @Component({
   selector: 'app-shared-table',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule], // 2. Add ReactiveFormsModule
   templateUrl: './shared-table.component.html',
   styleUrls: ['./shared-table.component.css'],
 })
-export class SharedTableComponent implements OnChanges {
+export class SharedTableComponent implements OnChanges, OnInit, OnDestroy {
   @Input() data: any[] = [];
   @Input() columns: TableColumn[] = [];
-
-  // New Input: Default to 1400px (for Info screen), but allow override
   @Input() minWidth: string = '1400px';
 
-  searchText: string = '';
+  // 3. Replace simple string with FormControl
+  searchControl = new FormControl('');
+  private searchSubscription: Subscription | undefined;
 
   // Pagination State
   currentPage: number = 1;
@@ -32,17 +41,39 @@ export class SharedTableComponent implements OnChanges {
   filteredData: any[] = [];
   paginatedData: any[] = [];
 
+  // 4. Setup the reactive listener
+  ngOnInit() {
+    this.searchSubscription = this.searchControl.valueChanges
+      .pipe(
+        debounceTime(300), // Wait 300ms after user stops typing
+        distinctUntilChanged() // Only emit if value is different from previous
+      )
+      .subscribe(() => {
+        this.filterData();
+      });
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['data']) {
       this.filterData();
     }
   }
 
+  // 5. Clean up subscription
+  ngOnDestroy() {
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
+    }
+  }
+
   filterData() {
-    if (!this.searchText) {
+    // 6. Get value from FormControl
+    const searchText = this.searchControl.value || '';
+
+    if (!searchText) {
       this.filteredData = [...this.data];
     } else {
-      const searchLower = this.searchText.toLowerCase();
+      const searchLower = searchText.toLowerCase();
       this.filteredData = this.data.filter((row) => {
         return this.columns.some((col) => {
           const val = row[col.field]
