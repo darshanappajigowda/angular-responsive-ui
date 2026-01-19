@@ -3,38 +3,45 @@
     background-color: var(--primary-color);
     color: white;
     height: 72px;
-    display: flex;
-    align-items: center;
     padding: 0;
-    /* Remove default padding, we handle it inside sections */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: relative;
     z-index: 1000;
+
+    /* New: Use Flex to center the inner content wrapper */
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+/* New: Constrains content width to match main layout */
+.header-inner {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 1600px;
+    /* Matches .main-layout max-width */
+    height: 100%;
 }
 
 .header-left {
     width: 260px;
-    /* Reverted to match original sidebar width */
     min-width: 260px;
     display: flex;
     align-items: center;
     padding-left: 20px;
     border-right: 1px solid rgba(255, 255, 255, 0.1);
-    /* Restored original semi-transparent border */
     height: 100%;
     background-color: transparent;
-    /* Background now inherits primary blue from .top-header */
 }
 
 .logo-text {
     color: white;
-    /* Reverted to white */
     font-weight: 700;
 }
 
 .logo-icon {
     color: white;
-    /* Reverted to white */
 }
 
 .burger-btn {
@@ -43,12 +50,9 @@
     cursor: pointer;
     margin-right: 15px;
     display: none;
-    /* Hidden on Desktop */
     padding: 0;
     color: white;
-    /* Reverted to white icon color */
 }
-
 
 .logo-container {
     display: flex;
@@ -57,14 +61,6 @@
     font-weight: 700;
     font-size: 1.35rem;
 }
-
-/* .logo-icon {
-    width: 32px;
-    /* Increased from 28px 
-height: 32px;
-}
-
-*/
 
 /* 2. CENTER SECTION (Title) */
 .header-center {
@@ -76,7 +72,6 @@ height: 32px;
 
 h1 {
     font-size: 1.6rem;
-    /* Increased from 1.25rem */
     margin: 0;
     font-weight: 500;
     letter-spacing: 0.5px;
@@ -86,15 +81,15 @@ h1 {
 .header-right {
     padding-right: 20px;
     position: relative;
-    /* Anchor for the dropdown */
     height: 100%;
     display: flex;
     align-items: center;
+    /* Ensure it aligns to the right end of the inner wrapper */
+    justify-content: flex-end;
 }
 
 .tools-icon-prefix {
     margin-right: 2px;
-    /* Small gap between icon and text */
 }
 
 .tools-toggle {
@@ -104,7 +99,6 @@ h1 {
     display: flex;
     align-items: center;
     gap: 8px;
-    /* Spacing between all items */
     cursor: pointer;
     font-family: inherit;
     font-size: 1rem;
@@ -131,7 +125,6 @@ h1 {
 .tools-menu {
     position: absolute;
     top: 100%;
-    /* Just below the header */
     right: 10px;
     width: 200px;
     background-color: white;
@@ -140,6 +133,8 @@ h1 {
     padding: 10px 0;
     border: 1px solid #eee;
     animation: fadeIn 0.2s ease;
+    z-index: 1001;
+    /* Ensure above other elements */
 }
 
 .menu-heading {
@@ -151,7 +146,6 @@ h1 {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     display: none;
-    /* Hidden on large screens, shown on mobile */
 }
 
 .tools-list {
@@ -225,24 +219,19 @@ h1 {
 
     .burger-btn {
         display: block;
-        /* Show burger */
     }
 }
 
 @media (max-width: 768px) {
-
-    /* Hide the TEXT "Dev Tools" on small screens, keep chevron */
     .tools-text {
         display: none;
     }
 
-    /* Show the Heading inside the dropdown instead */
     .menu-heading {
         display: block;
     }
 
     h1 {
         font-size: 1.1rem;
-        /* Smaller title */
     }
 }

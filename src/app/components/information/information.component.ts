@@ -55,6 +55,9 @@ export class InformationComponent {
   onSubmit() {
     this.isSubmitted = true;
 
+    console.log('Form Status:', this.infoForm.status);
+    console.log('Form Values:', this.infoForm.value);
+
     if (this.infoForm.valid) {
       this.showTable = true;
       this.loadMockData();
