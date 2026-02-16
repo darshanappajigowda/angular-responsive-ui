@@ -15,23 +15,28 @@ export class HomeComponent implements OnInit {
   status: 'loading' | 'unauthorized' | 'error' = 'loading';
 
   // Mocking the ID retrieved from the Browser/SSO Environment
-  currentUserId: string = 'CO73227';
+  currentUserId: string = 'ADMIN_USER';
 
   constructor(private authService: AuthService, private router: Router) {}
 
+  // Small tweak in home.component.ts
   ngOnInit() {
-    this.checkAuthorization();
+    if (this.router.url.includes('unauthorized')) {
+      this.status = 'unauthorized';
+    } else {
+      this.checkAuthorization(); // Normal login flow
+    }
   }
 
   checkAuthorization() {
     this.status = 'loading';
 
-    // 1. Pass User ID to Service
-    this.authService.authorizeUser(this.currentUserId).subscribe({
-      next: (isAuthorized) => {
-        if (isAuthorized) {
-          // 2. Success: Set Session & Redirect
-          this.authService.setSession(true);
+    // 1. Call the updated method in AuthService
+    this.authService.fetchTokenAndAuthenticate(this.currentUserId).subscribe({
+      next: (response) => {
+        if (response.success) {
+          // 2. Success: The session is already set inside the service's tap() operator,
+          // so we just need to redirect the user.
           this.router.navigate(['/deploy']);
         } else {
           // 3. Failure: Show Access Denied UI

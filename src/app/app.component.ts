@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+// src/app/app.component.ts
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
 import { LeftNavComponent } from './components/left-nav/left-nav.component';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +15,12 @@ import { LeftNavComponent } from './components/left-nav/left-nav.component';
 })
 export class AppComponent {
   isMobileMenuOpen = false;
+
+  // Inject the AuthService
+  authService = inject(AuthService);
+
+  // Expose the observable to the template
+  isLoggedIn$ = this.authService.isLoggedIn$;
 
   toggleMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
