@@ -33,12 +33,10 @@
         <div class="form-group">
             <label class="col-label">Deployment Source <span class="required">*</span></label>
             <div class="col-input">
-                <select formControlName="deploymentSource"
-                    [class.input-error]="isSubmitted && deploymentForm.get('deploymentSource')?.invalid">
-                    <option value="">Select deployment source</option>
-                    <option value="GitLab">GitLab</option>
-                    <option value="Jenkins">Jenkins</option>
-                </select>
+                <app-searchable-dropdown formControlName="deploymentSource" placeholder="Select deployment source"
+                    [options]="deploymentSourceOptions"
+                    [hasError]="isSubmitted && !!deploymentForm.get('deploymentSource')?.invalid">
+                </app-searchable-dropdown>
                 @if (isSubmitted && deploymentForm.get('deploymentSource')?.invalid) {
                 <div class="error-msg">Deployment Source is required</div>
                 }
@@ -48,12 +46,9 @@
         <div class="form-group">
             <label class="col-label">Build <span class="required">*</span></label>
             <div class="col-input">
-                <select formControlName="build"
-                    [class.input-error]="isSubmitted && deploymentForm.get('build')?.invalid">
-                    <option value="">Select build</option>
-                    <option value="Build_1.0.1">Build_1.0.1</option>
-                    <option value="Build_1.0.2">Build_1.0.2</option>
-                </select>
+                <app-searchable-dropdown formControlName="build" placeholder="Select build" [options]="buildOptions"
+                    [hasError]="isSubmitted && !!deploymentForm.get('build')?.invalid">
+                </app-searchable-dropdown>
                 @if (isSubmitted && deploymentForm.get('build')?.invalid) {
                 <div class="error-msg">Build is required</div>
                 }
@@ -70,12 +65,10 @@
         <div class="form-group">
             <label class="col-label">Environment <span class="required">*</span></label>
             <div class="col-input">
-                <select formControlName="environment"
-                    [class.input-error]="isSubmitted && deploymentForm.get('environment')?.invalid">
-                    <option value="">Select environment</option>
-                    <option value="SYST">SYST</option>
-                    <option value="UAT">UAT</option>
-                </select>
+                <app-searchable-dropdown formControlName="environment" placeholder="Select environment"
+                    [options]="environmentOptions"
+                    [hasError]="isSubmitted && !!deploymentForm.get('environment')?.invalid">
+                </app-searchable-dropdown>
                 @if (isSubmitted && deploymentForm.get('environment')?.invalid) {
                 <div class="error-msg">Environment is required</div>
                 }
@@ -85,13 +78,9 @@
         <div class="form-group">
             <label class="col-label">Domain <span class="required">*</span></label>
             <div class="col-input has-badge">
-                <select formControlName="domainValue"
-                    [class.input-error]="isSubmitted && deploymentForm.get('domainValue')?.invalid">
-                    <option value="">Select domain</option>
-                    <option value="S1FD11">S1FD11</option>
-                    <option value="S1FD12">S1FD12</option>
-                    <option value="SYST">SYST</option>
-                </select>
+                <app-searchable-dropdown formControlName="domainValue" placeholder="Select domain"
+                    [options]="domainOptions" [hasError]="isSubmitted && !!deploymentForm.get('domainValue')?.invalid">
+                </app-searchable-dropdown>
 
                 @if (deploymentForm.get('domainValue')?.value === 'S1FD11') {
                 <div class="domain-badge external">External JBoss7 Domain</div>

@@ -17,7 +17,10 @@ export class HomeComponent implements OnInit {
   // Mocking the ID retrieved from the Browser/SSO Environment
   currentUserId: string = 'ADMIN_USER';
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+  ) {}
 
   // Small tweak in home.component.ts
   ngOnInit() {

@@ -7,11 +7,20 @@ import {
   Validators,
 } from '@angular/forms';
 import { FlatpickrDirective } from 'angularx-flatpickr';
+import {
+  SearchableDropdownComponent,
+  DropdownOption,
+} from '../shared/searchable-dropdown/searchable-dropdown.component';
 
 @Component({
   selector: 'app-deployment-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FlatpickrDirective],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FlatpickrDirective,
+    SearchableDropdownComponent,
+  ],
   templateUrl: './deployment-form.component.html',
   styleUrls: ['./deployment-form.component.css'],
 })
@@ -27,6 +36,61 @@ export class DeploymentFormComponent implements OnInit {
     deploymentTarget: new FormControl('', Validators.required),
     deploymentTime: new FormControl<Date | null>(null),
   });
+
+  deploymentSourceOptions: DropdownOption[] = [
+    { value: 'GitLab', label: 'GitLab' },
+    { value: 'GitHub', label: 'GitHub' },
+    { value: 'Bitbucket', label: 'Bitbucket' },
+    { value: 'Jenkins', label: 'Jenkins' },
+    { value: 'TeamCity', label: 'TeamCity' },
+    { value: 'Bamboo', label: 'Bamboo' },
+    { value: 'CircleCI', label: 'CircleCI' },
+    { value: 'TravisCI', label: 'Travis CI' },
+    { value: 'Azure DevOps', label: 'Azure DevOps' },
+    { value: 'AWS CodeBuild', label: 'AWS CodeBuild' },
+    { value: 'AWS CodePipeline', label: 'AWS CodePipeline' },
+    { value: 'GCP Cloud Build', label: 'GCP Cloud Build' },
+    { value: 'GitHub Actions', label: 'GitHub Actions' },
+    { value: 'GitLab CI', label: 'GitLab CI' },
+    { value: 'Drone', label: 'Drone CI' },
+    { value: 'Buildkite', label: 'Buildkite' },
+    { value: 'Concourse', label: 'Concourse CI' },
+    { value: 'Spinnaker', label: 'Spinnaker' },
+    { value: 'ArgoCD', label: 'ArgoCD' },
+    { value: 'Octopus', label: 'Octopus Deploy' },
+    { value: 'Nexus', label: 'Sonatype Nexus' },
+    { value: 'Artifactory', label: 'JFrog Artifactory' },
+    { value: 'Harness', label: 'Harness' },
+    { value: 'CodeShip', label: 'CodeShip' },
+    { value: 'Semaphore', label: 'Semaphore CI' },
+    { value: 'Wercker', label: 'Wercker' },
+    { value: 'GoCD', label: 'GoCD' },
+    { value: 'Buddy', label: 'Buddy' },
+    { value: 'AppVeyor', label: 'AppVeyor' },
+    { value: 'Codefresh', label: 'Codefresh' },
+    { value: 'Tekton', label: 'Tekton Pipelines' },
+    { value: 'FluxCD', label: 'FluxCD' },
+    { value: 'Internal SVN', label: 'Internal SVN' },
+    { value: 'Mercurial', label: 'Mercurial' },
+    { value: 'Perforce', label: 'Perforce Helix' },
+    { value: 'Manual Upload', label: 'Manual Upload' },
+  ];
+
+  buildOptions: DropdownOption[] = [
+    { value: 'Build_1.0.1', label: 'Build_1.0.1' },
+    { value: 'Build_1.0.2', label: 'Build_1.0.2' },
+  ];
+
+  environmentOptions: DropdownOption[] = [
+    { value: 'SYST', label: 'SYST' },
+    { value: 'UAT', label: 'UAT' },
+  ];
+
+  domainOptions: DropdownOption[] = [
+    { value: 'S1FD11', label: 'S1FD11' },
+    { value: 'S1FD12', label: 'S1FD12' },
+    { value: 'SYST', label: 'SYST' },
+  ];
 
   // Display-only variables (Not part of the form validation)
   fortifyStatus: string = 'Valid';
@@ -83,14 +147,14 @@ export class DeploymentFormComponent implements OnInit {
       this.showToast(
         `Deployment initiated: ${build} to ${env}`,
         'success',
-        false
+        false,
       );
       this.resetForm();
     } else {
       this.showToast(
         'A technical error occurred while performing the action, please try again later. If the issue persists, please contact Consultancy team.',
         'error',
-        false
+        false,
       );
     }
   }
@@ -116,7 +180,7 @@ export class DeploymentFormComponent implements OnInit {
   showToast(
     message: string,
     type: 'success' | 'error',
-    autoClose: boolean = false
+    autoClose: boolean = false,
   ) {
     if (this.toastTimeout) {
       clearTimeout(this.toastTimeout);
