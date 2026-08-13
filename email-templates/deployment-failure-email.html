@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deployment Notification - Failure</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            font-family: 'Ubuntu', Arial, sans-serif;
+            color: #333;
+        }
+
+        .wrapper {
+            background-color: #f5f7fa;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 520px;
+            width: 100%;
+        }
+
+        /* --- Status banner --- */
+        .status-banner {
+            background-color: #ffffff;
+            border-left: 5px solid #dc3545;
+            border-radius: 4px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            width: 100%;
+        }
+
+        .icon-cell {
+            padding: 18px 22px;
+            vertical-align: middle;
+        }
+
+        .icon-circle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background-color: #dc3545;
+        }
+
+        .icon-svg {
+            display: block;
+            margin: 6px;
+        }
+
+        .status-text-cell {
+            padding: 18px 22px 18px 0;
+            vertical-align: middle;
+        }
+
+        .status-text {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        /* --- Card (mirrors .modal-content) --- */
+        .card {
+            background-color: #ffffff;
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background-color: #f8f9fa;
+            padding: 15px 25px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-header-title {
+            margin: 0;
+            color: #005a9c;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        /* --- Summary grid (mirrors .summary-grid / .summary-item) --- */
+        .summary-grid {
+            width: 100%;
+            background-color: #f9fbfd;
+            border: 1px solid #e3effa;
+            border-radius: 6px;
+            padding: 15px;
+            border-collapse: separate;
+        }
+
+        .summary-cell {
+            padding: 8px 15px;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+
+        .summary-cell.last {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            font-weight: 600;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .summary-value {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .summary-value.capitalize {
+            text-transform: capitalize;
+        }
+
+        .summary-value.reason {
+            color: #dc3545;
+        }
+
+        /* --- Footer --- */
+        .footer-cell {
+            padding-top: 25px;
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 0.8rem;
+            color: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="wrapper">
+        <tr>
+            <td align="center">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="container">
+
+                    <!-- Status banner -->
+                    <tr>
+                        <td style="padding-bottom:20px;">
+                            <table role="presentation" cellpadding="0" cellspacing="0" class="status-banner">
+                                <tr>
+                                    <td class="icon-cell" width="36">
+                                        <table role="presentation" width="28" height="28" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td width="28" height="28" align="center" valign="middle" class="icon-circle">
+                                                    <svg class="icon-svg" width="16" height="16" viewBox="0 0 24 24"
+                                                        fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"
+                                                        stroke-linejoin="round">
+                                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                                    </svg>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td class="status-text-cell">
+                                        <span class="status-text">
+                                            Install request for application failed
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Card (mirrors .modal-content) -->
+                    <tr>
+                        <td>
+                            <table role="presentation" cellpadding="0" cellspacing="0" class="card">
+
+                                <tr>
+                                    <td class="card-header">
+                                        <span class="card-header-title">Deployment Details</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="card-body">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" class="summary-grid">
+
+                                            <tr>
+                                                <td class="summary-cell">
+                                                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                                                        <tr>
+                                                            <td class="summary-label">Action:</td>
+                                                            <td align="right" class="summary-value capitalize">{{action}}</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="summary-cell">
+                                                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                                                        <tr>
+                                                            <td class="summary-label">Source:</td>
+                                                            <td align="right" class="summary-value">{{source}}</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="summary-cell">
+                                                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                                                        <tr>
+                                                            <td class="summary-label">Build:</td>
+                                                            <td align="right" class="summary-value">{{build}}</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="summary-cell">
+                                                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                                                        <tr>
+                                                            <td class="summary-label">Environment:</td>
+                                                            <td align="right" class="summary-value">{{environment}}</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="summary-cell">
+                                                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                                                        <tr>
+                                                            <td class="summary-label">Domain:</td>
+                                                            <td align="right" class="summary-value">{{domain}}</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="summary-cell">
+                                                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                                                        <tr>
+                                                            <td class="summary-label">Target:</td>
+                                                            <td align="right" class="summary-value">{{target}}</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="summary-cell last">
+                                                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                                                        <tr>
+                                                            <td class="summary-label" style="vertical-align:top;">Reason:</td>
+                                                            <td align="right" class="summary-value reason">{{failureReason}}</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td class="footer-cell">
+                            <span class="footer-text">This is an automated notification from AutoDeployLite. Please do not reply to this email.</span>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>
